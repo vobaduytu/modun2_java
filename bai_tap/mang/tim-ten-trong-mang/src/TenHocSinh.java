@@ -8,7 +8,7 @@ public class TenHocSinh {
         String newname = sc.nextLine();
         for (int i = 0; i < name.length;i++){
             if(name[i].equals(newname)){
-                System.out.println("vi tri ten hoc sinh trong mang :" + (i + 1));
+                System.out.println("vi tri ten hoc sinh trong mang: " + (i + 1));
 
             }
 
