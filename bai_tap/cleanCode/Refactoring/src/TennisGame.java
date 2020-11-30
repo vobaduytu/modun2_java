@@ -1,9 +1,4 @@
 public class TennisGame {
-    public static final char SUBTRACTION = '-';
-    public static final int SCORE_LOVE = 0;
-    public static final int SCORE_15 = 1;
-    public static final int SCORE_30 = 2;
-    public static final int SCORE_40 = 3;
 
     public static String getScore(String player1Name, String player2Name, int scoreOne, int scoreTwo) {
         String score = "";
@@ -25,6 +20,7 @@ public class TennisGame {
                 default:
                     score = "Deuce";
                     break;
+
             }
         } else if (scoreOne >= 4 || scoreTwo >= 4) {
             int minusResult = scoreOne - scoreTwo;
@@ -39,21 +35,22 @@ public class TennisGame {
             for (int i = 1; i < 3; i++) {
                 if (i == 1) tempScore = scoreOne;
                 else {
-                    score += SUBTRACTION;
+                    score += "-";
                     tempScore = scoreTwo;
                 }
                 switch (tempScore) {
-                    case SCORE_LOVE:
-                        return "love";
-
-                    case SCORE_15:
-                        return "Fifteen";
-
-                    case SCORE_30:
-                        return "Thirty";
-
-                    case SCORE_40:
-                        return "Forty";
+                    case 0:
+                        score += "Love";
+                        break;
+                    case 1:
+                        score += "Fifteen";
+                        break;
+                    case 2:
+                        score += "Thirty";
+                        break;
+                    case 3:
+                        score += "Forty";
+                        break;
                 }
             }
         }
