@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class Triangle extends Shape {
     public String color;
 
-    public Triangle(){}
+    public Triangle() {
+    }
 
     public Triangle(String color) {
         this.color = color;
@@ -26,20 +27,18 @@ public class Triangle extends Shape {
     public String toString() {
         return
                 " color='" + color + '\'' +
-                " arae="+ getArea()+
-                " 1="+ side1+
-                " 2="+ side2+
-                " 3="+ side3+
-                " Perimeter= "+ getPerimeter()
+                        " arae=" + getArea() +
+
+                        " Perimeter= " + getPerimeter()
                 ;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("nhap mau ban muon");
-          String color = sc.nextLine();
+        String color = sc.nextLine();
         System.out.println("nhap canh 1");
-          int side1 = sc.nextInt();
+        int side1 = sc.nextInt();
         System.out.println("nhap canh 2");
         int side2 = sc.nextInt();
         System.out.println("nhap canh 3");

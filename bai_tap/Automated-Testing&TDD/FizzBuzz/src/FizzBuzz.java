@@ -30,6 +30,8 @@ public class FizzBuzz {
         if (firstDigit == 1 && secondDigit == 0) {
             return "mười";
         }
+
+
         return arr[firstDigit] + " " + (secondDigit == 0 ? "mươi" : arr[secondDigit]);
     }
 
