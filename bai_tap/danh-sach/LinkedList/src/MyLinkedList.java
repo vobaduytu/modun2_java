@@ -81,13 +81,17 @@ public class MyLinkedList<E> {
     public boolean contains(E o) {
         Node temp = head;
 
-         while (temp != null) {
+        while (temp != null) {
             if (o.equals(temp.getData()))
-                return true;
-            temp = temp.next;
+               return true;
+            temp = temp.next();
 
         }
         return false;
+    }
+    public void clear(){
+     head = null;
+     numNodes  = 0;
     }
 
     public void printList() {
@@ -96,6 +100,9 @@ public class MyLinkedList<E> {
             System.out.println(temp.data);
             temp = temp.next;
         }
+    }
+    public MyLinkedList<E> clone(){
+        return this;
     }
 
     public class Node {
