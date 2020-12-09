@@ -31,8 +31,8 @@ public class MyStack {
             System.out.println("mang trong");
             return -1;
         }
+        return arr[--index] ;
 
-        return arr[--index];
     }
 
     public int size() {
@@ -46,11 +46,13 @@ public class MyStack {
     }
 
     public static void main(String[] args) {
-        MyStack myStack = new MyStack(3);
+        MyStack myStack = new MyStack(4);
         myStack.push(1);
         myStack.push(2);
         myStack.push(3);
         myStack.push(4);
+        System.out.println("so bi xoa: " + myStack.pop());
+     
         myStack.print();
     }
 }
