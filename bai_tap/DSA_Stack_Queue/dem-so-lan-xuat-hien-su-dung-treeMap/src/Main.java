@@ -30,7 +30,7 @@ public class Main {
         }
         Set<Character> characters = map.keySet();
 
-        for (Character ten : characters) {
+        for (Character ten: characters) {
             System.out.println(ten + " : " + map.get(ten));
         }
     }
