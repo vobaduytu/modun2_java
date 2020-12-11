@@ -1,17 +1,23 @@
 public class AtmGoc {
-    public int many = 1200000;
+    private static int many = 1200000;
+
     public final String name = " Nguyen Van A";
 
     public AtmGoc(String name, int many) {
         this.many = many;
     }
 
-    public int getMany() {
+    public static int getMany() {
         return many;
     }
 
-    public void setMany(int many) {
-        this.many = many;
+    public void napMoney(int amount) {
+        if (amount > 0) {
+            this.many += amount;
+        } else {
+            System.out.println("So tien khong duoc nho hon 0");
+        }
+
     }
 
     public String getName() {

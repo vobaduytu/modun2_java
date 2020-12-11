@@ -8,8 +8,8 @@ public class Main {
             System.out.println("Ngan hang ABC kinh chao Quy khach Nguyen Van A" +
                     " Menu:\n");
             System.out.println("1.  nhấn phím A để kiểm tra tài khoản");
-            System.out.println("2.  nhấn phím B để nạp tiền");
-            System.out.println("3.  nhấn phím W để nạp tiền");
+            System.out.println("2.  nhấn phím D để nạp tiền");
+            System.out.println("3.  nhấn phím W để rút tiền");
             System.out.println("4.  nhấn phím H để xem lịch sử 3 lần");
             System.out.println("5.  nhấn phím X để thoát");
             System.out.println("------------------------------");

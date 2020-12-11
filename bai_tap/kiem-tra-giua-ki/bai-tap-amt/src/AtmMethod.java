@@ -2,13 +2,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AtmMethod {
-    public int sumMany = 1200000;
+public class AtmMethod extends AtmGoc{
 
+    public AtmMethod(String name, int many) {
+        super(name, many);
+    }
 
     public final static List<AtmGoc> arr = new ArrayList<>();
     public static int size = 0;
 
+
+    public static void checkBank(){
+        System.out.println(getMany());
+
+    }
 
     public static void add(String name, int many) {
         arr.add(new AtmGoc("Nguyen Van A", 1200000));
@@ -25,10 +32,12 @@ public class AtmMethod {
 
         Scanner scanner = new Scanner(System.in);
 
-        int napMany = scanner.nextInt();
-        System.out.println("giao dich thanh cong. Ban vua nap " + napMany +  " thanh cong");
+        int amount = scanner.nextInt();
 
-        System.out.println("so du tai khoan ngan hang la: " + napMany + "VND");
+        System.out.println("giao dich thanh cong. Ban vua nap " + amount +   " thanh cong");
+
+
+        System.out.println("so du tai khoan ngan hang la: " + (amount + getMany())+ "VND");
 
         System.out.println("bam nut b de thuc hien giao dich");
     }
@@ -39,11 +48,11 @@ public class AtmMethod {
         int rutMany = scanner.nextInt();
 
         System.out.println("giao dich thanh cong. Ban vua rut " + rutMany +  " thanh cong");
-//        System.out.println("so du tai khoan la: " + rutMany + "VND");
+        System.out.println("so du tai khoan la: " + (getMany()-rutMany) +  "VND");
 
         System.out.println("bam nut de thuc hien giao dich: ");
 
-        if (rutMany > 1200000) {
+        if (rutMany > getMany()) {
             System.out.println("khong rut duoc tien do thieu tien");
             System.out.println("giao dich khong thanh cong");
 //            System.out.println("so du tai khoan la: " + 1200000);
