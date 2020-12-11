@@ -21,11 +21,9 @@ public class Main {
             switch (chon) {
                 case "A":
                     AtmMethod.add("Nguyen Van A", 1200000);
-
-                case " TU":
                     AtmMethod.seach();
-                    System.out.println("bấm nút tiếp theo để thực hiện giao dịch");
-                    break;
+                     break;
+//              
                 case "D":
 
                     System.out.println("so tien ban nap");
