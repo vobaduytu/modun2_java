@@ -8,7 +8,11 @@ public class ProductController {
 
 
     public static void add(int id, String name, int price) {
-        productList.add(new Product(id, name, price));
+        Product products = findById(id);
+       if (products != null){
+           System.out.println("id da xuat hien");
+       }else
+            productList.add(new Product(id, name, price));
         size++;
     }
 
@@ -46,42 +50,39 @@ public class ProductController {
         if (gia == 1) {
             Collections.sort(productList);
             System.out.println(productList);
-            return;
         } else if
         (gia == 2) {
-            Collections.sort(productList, Comparator.comparingInt(Product::getPrice));
+            productList.sort(Comparator.comparingInt(Product::getPrice));
             System.out.println(productList);
-            return;
         } else
             System.out.println("ban chon sai phuong thuc sap xep");
 
     }
 
 
-    public static Product name(String name) {
+    public static Product getProductByName(String name) {
         for (Product product : productList) {
-            if (name == product.getName()) ;
-//            System.out.println(product);
+            if (name.equals(product.getName()))
             return product;
         }
         return null;
     }
 
-    public static void seachName() {
+    public static void searchName() {
         System.out.println("nhập tên sản phẩm: ");
-        String nameRepair = scanner.nextLine();
-        Product productss = name(nameRepair);
-        if (productss == null) {
+        String name = scanner.nextLine();
+        Product currentProduct = getProductByName(name);
+        if (currentProduct == null)  {
             System.out.println("không tìm thấy tên");
             return;
         }
-        System.out.println(productss);
+        System.out.println(currentProduct);
     }
 
     public static void newName() {
         System.out.println("nhập tên sản phẩm: ");
         String nameRepair = scanner.nextLine();
-        Product productss = name(nameRepair);
+        Product productss = getProductByName(nameRepair);
         if (productss == null) {
             System.out.println("không tìm thấy tên");
             return;

@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -44,7 +43,7 @@ public class Main {
                     break;
                 case 6:
 
-                    ProductController.seachName();
+                    ProductController.searchName();
                     break;
                 case 7:
                     ProductController.sort();
