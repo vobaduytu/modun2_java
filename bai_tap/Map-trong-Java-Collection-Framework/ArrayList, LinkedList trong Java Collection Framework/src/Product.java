@@ -1,4 +1,4 @@
-public class Product {
+public class Product implements Comparable<Product> {
     private final int id;
     private String name;
     private int price;
@@ -39,4 +39,8 @@ public class Product {
                 '}';
     }
 
+    @Override
+    public int compareTo(Product o) {
+        return this.getName().compareTo(o.getName());
+    }
 }
