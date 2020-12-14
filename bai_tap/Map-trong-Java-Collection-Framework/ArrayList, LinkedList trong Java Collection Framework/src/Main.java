@@ -5,7 +5,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         boolean cont = true;
         do {
-            System.out.println("Chọn chức năng : [1- 7]");
+            System.out.println("Chọn chức năng : [1- 8]");
             System.out.println("1: thêm sản phẩm ");
             System.out.println("2: Sửa thông tin sản phẩm theo id");
             System.out.println("3: xóa sản phẩm theo id");
@@ -13,6 +13,7 @@ public class Main {
             System.out.println("5: Sửa sản phẩm theo tên");
             System.out.println("6: tìm kiếm sản phẩm theo tên");
             System.out.println("7: sắp xếp sản phẩm  ");
+            System.out.println("8: thoát");
 
 
             int chon = input.nextInt();
@@ -49,8 +50,12 @@ public class Main {
                     ProductController.sort();
 
                     break;
+                case 8:
+                    System.out.println("goodbye");
+                    cont = false;
+                    break;
                 default:
-                    System.out.println("Tạm biệt");
+                    System.out.println("nhap sai ");
                     cont = false;
                     break;
             }

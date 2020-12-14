@@ -48,11 +48,12 @@ public class ProductController {
         int gia = Integer.parseInt(scanner.nextLine());
 
         if (gia == 1) {
-            Collections.sort(productList);
+            productList.sort(Comparator.comparingInt(Product::getPrice));
             System.out.println(productList);
         } else if
         (gia == 2) {
-            productList.sort(Comparator.comparingInt(Product::getPrice));
+            Collections.sort(productList);
+
             System.out.println(productList);
         } else
             System.out.println("ban chon sai phuong thuc sap xep");
