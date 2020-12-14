@@ -11,6 +11,11 @@ public class AtmGoc {
         return many;
     }
 
+    public static int setMany(int many) {
+        AtmGoc.many = many;
+        return many;
+    }
+
     public void napMoney(int amount) {
         if (amount > 0) {
             this.many += amount;
