@@ -3,21 +3,21 @@ import java.util.*;
 public class ProductController {
 
     private static Scanner scanner = new Scanner(System.in);
-    public final static List<Product> array = new ArrayList();
+    public static List<Product> productList = new ArrayList<>();
     public static int size = 0;
 
 
     public static void add(int id, String name, int price) {
-        array.add(new Product(id, name, price));
+        productList.add(new Product(id, name, price));
         size++;
     }
 
     public static void show() {
-        System.out.println(array);
+        System.out.println(productList);
     }
 
     public static Product findById(int id) {
-        for (Product product : array) {
+        for (Product product : productList) {
             if (id == product.getId())
                 return product;
         }
@@ -32,7 +32,7 @@ public class ProductController {
             System.out.println("khong tim thay san pham");
             return;
         }
-        array.remove(products);
+        productList.remove(products);
     }
 
     public static void sort() {
@@ -44,13 +44,13 @@ public class ProductController {
         int gia = Integer.parseInt(scanner.nextLine());
 
         if (gia == 1) {
-            Collections.sort(array);
-            System.out.println(array);
+            Collections.sort(productList);
+            System.out.println(productList);
             return;
         } else if
         (gia == 2) {
-            Collections.sort(array, Comparator.comparingInt(Product::getPrice));
-            System.out.println(array);
+            Collections.sort(productList, Comparator.comparingInt(Product::getPrice));
+            System.out.println(productList);
             return;
         } else
             System.out.println("ban chon sai phuong thuc sap xep");
@@ -59,7 +59,7 @@ public class ProductController {
 
 
     public static Product name(String name) {
-        for (Product product : array) {
+        for (Product product : productList) {
             if (name == product.getName()) ;
 //            System.out.println(product);
             return product;
