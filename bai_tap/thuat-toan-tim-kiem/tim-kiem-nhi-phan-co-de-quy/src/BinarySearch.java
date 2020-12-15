@@ -22,6 +22,6 @@ public class BinarySearch {
 
         int low = 0;
         int high = array.length-1;
-        System.out.println(BinarySearch.binarySearch(array,3,low,high));
+        System.out.println(BinarySearch.binarySearch(array,11,low,high));
     }
 }
