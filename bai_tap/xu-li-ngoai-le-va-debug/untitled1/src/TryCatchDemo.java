@@ -1,16 +1,10 @@
 
-
-
 public class TryCatchDemo {
     public static void main(String[] args) {
-
-
         try {
             test();
-            int data = 5 / 0;
-//        } catch (ArithmeticException ex) {
-//            System.out.println("ArithmeticException");
-//            System.out.println(ex);
+            int x = 0;
+            int data = 5 / x;
         } catch (Exception ex) {
             System.out.println("bat test");
         } finally {
@@ -19,13 +13,8 @@ public class TryCatchDemo {
         System.out.println("Finished!");
     }
 
-    public static void test2() {
-        test();
-    }
-
-
-    public static void test() {
-        throw new RuntimeException();
+    public static void test() throws Exception {
+        throw new Exception();
     }
 }
  

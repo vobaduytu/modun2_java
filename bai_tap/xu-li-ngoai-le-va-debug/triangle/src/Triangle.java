@@ -13,9 +13,8 @@ public class Triangle {
         try {
             check(a, b, c);
         } catch (IllegalTriangleException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-
     }
 
     public static void check(int a, int b, int c) throws IllegalTriangleException {
