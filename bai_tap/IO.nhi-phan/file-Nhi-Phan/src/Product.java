@@ -2,10 +2,10 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
-        public int id;
-        public String nameProduct;
-        public String manufacturer;
-        public int price;
+    public int id;
+    public String nameProduct;
+    public String manufacturer;
+    public int price;
 
     public Product(int id, String nameProduct, String manufacturer, int price) {
         this.id = id;
@@ -48,11 +48,11 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +" - "+
-                  id +" - "+
-                nameProduct + " - "+
-                 manufacturer  +" - "+
-                 price +" "+
+        return "{" + " - " +
+                id + " - " +
+                nameProduct + " - " +
+                manufacturer + " - " +
+                price + " " +
                 '}';
     }
 }

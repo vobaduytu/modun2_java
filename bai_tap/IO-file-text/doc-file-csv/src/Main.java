@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +19,8 @@ public class Main {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String value;
             while ((value = bufferedReader.readLine())!= null){
-                System.out.println(value);
+                String [] fileCSV=value.split(",");
+                System.out.println(fileCSV[4]+ ":" + fileCSV[5]);
             }
             bufferedReader.close();
 

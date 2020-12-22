@@ -2,16 +2,16 @@ import java.util.*;
 
 public class ProductController {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     public static List<Product> productList = new ArrayList<>();
     public static int size = 0;
 
 
     public static void add(int id, String name, int price) {
         Product products = findById(id);
-       if (products != null){
-           System.out.println("id da xuat hien");
-       }else
+        if (products != null) {
+            System.out.println("id da xuat hien");
+        } else
             productList.add(new Product(id, name, price));
         size++;
     }
@@ -64,7 +64,7 @@ public class ProductController {
     public static Product getProductByName(String name) {
         for (Product product : productList) {
             if (name.equals(product.getName()))
-            return product;
+                return product;
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class ProductController {
         System.out.println("nhập tên sản phẩm: ");
         String name = scanner.nextLine();
         Product currentProduct = getProductByName(name);
-        if (currentProduct == null)  {
+        if (currentProduct == null) {
             System.out.println("không tìm thấy tên");
             return;
         }

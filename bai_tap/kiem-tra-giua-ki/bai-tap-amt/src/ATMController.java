@@ -2,84 +2,106 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AtmMethod {
-    Scanner scanner = new Scanner(System.in);
+public class ATMController {
+    private static Scanner scanner = new Scanner(System.in);
+    private static Account account;
+    private static ArrayList<String> history = new ArrayList<>();
 
-
-    public AtmMethod(String name, int many) {
-        super(name, many);
+    public static void setAccount(String name, int money) {
+        account = new Account(name, money);
+        System.out.println("Ngan hang ABC kinh chao Quy khach " + name);
     }
 
-    public final static List<Account> arr = new ArrayList<>();
-    public static int size = 0;
+    public static void run() {
+        while (true) {
+            String chon = getOption();
+            switch (chon) {
+                case "A":
+                    checkAccountBalance();
+                    break;
+                case "D":
+                    depositMoney();
+                    break;
+                case "W":
+                    withdrawalMoney();
+                    break;
+                case "H":
+                    showHistory();
+                    break;
+                case "X":
+                    exit();
+                    return;
+                default:
+                    System.out.println("ban nhap sai chuc nang");
+                    break;
+            }
+            System.out.println("\nBam nut theo menu de tiep tuc giao dich\n" +
+                    "===========================================");
+        }
+    }
 
+    private static String getOption() {
+        System.out.println(" Menu:");
+        System.out.println("1.  nhấn phím A để kiểm tra tài khoản");
+        System.out.println("2.  nhấn phím D để nạp tiền");
+        System.out.println("3.  nhấn phím W để rút tiền");
+        System.out.println("4.  nhấn phím H để xem lịch sử 3 lần");
+        System.out.println("5.  nhấn phím X để thoát");
+        System.out.println("------------------------------");
+        System.out.println("------------------------------");
 
-    public static void checkBank() {
-        System.out.println(getBalance());
-
+        System.out.println(" nhập lựa chọn của bạn:");
+        return scanner.nextLine().toUpperCase();
     }
 
 
-    public static void add(String name, int many) {
-        arr.add(new Account("Nguyen Van A", 1200000));
-        size++;
+    private static void checkAccountBalance() {
+        System.out.println("so du hien co trong tai khoan: " + account.getBalance());
     }
 
+    private static void depositMoney() {
+        System.out.println("so tien ban muon nap");
+        int amount = Integer.parseInt(scanner.nextLine());
 
-    public static void seach() {
-        System.out.println(arr);
-    }
-
-
-    public static void napMany() {
-
-
-
-        int amount = scanner.nextInt();
-
-        System.out.println("giao dich thanh cong. Ban vua nap " + amount + " thanh cong");
-        // amount = 100000
-        // A : 1200000
-        System.out.println("so du tai khoan ngan hang la: " + (amount + getBalance()) + "VND");
-        //                                           in           1300000
-        // A:
-
-        System.out.println("bam nut b de thuc hien giao dich");
-        AtmMethod.add(  "Nguyen Van A",setMany( (amount + getBalance())));
-
-    }
-
-
-    public static void rutMany() {
-        Scanner scanner = new Scanner(System.in);
-        int rutMany = scanner.nextInt();
-
-        System.out.println("giao dich thanh cong. Ban vua rut " + rutMany + " thanh cong");
-        System.out.println("so du tai khoan la: " + (getBalance() - rutMany) + "VND");
-
-        System.out.println("bam nut de thuc hien giao dich: ");
-
-        if (rutMany > getBalance()) {
-            System.out.println("khong rut duoc tien do thieu tien");
-            System.out.println("giao dich khong thanh cong");
-//            System.out.println("so du tai khoan la: " + 1200000);
-            System.out.println("ban khong the rut");
+        boolean result = account.deposit(amount);
+        if (result) {
+            System.out.println("giao dich thanh cong. Ban vua nap " + amount + " thanh cong");
+            history.add("Nap: " + amount);
+        } else {
+            System.out.println("giao dich that bai, khong the nap so tien am.");
         }
 
+        checkAccountBalance();
     }
 
-    public static void history() {
-        System.out.println("lịch sử giao dịch: ");
-        System.out.println("1. Nap tien: 100000VND");
-        System.out.println("2. Nap tien: 200000VND");
-        System.out.println("3. Nap tien: 300000VND");
 
-
+    private static void withdrawalMoney() {
+        System.out.println("so tien ban muon rut");
+        int amount = Integer.parseInt(scanner.nextLine());
+        boolean result = account.withdrawal(amount);
+        if (result) {
+            System.out.println("giao dich thanh cong. Ban vua rut " + amount + " thanh cong");
+            history.add("Rut: " + amount);
+        } else {
+            System.out.println("giao dich that bai, so tien khong hop le hoac lon hon so du hien tai");
+        }
+        checkAccountBalance();
     }
 
-    public static void exit() {
+    private static void showHistory() {
+        if (history.isEmpty()) {
+            System.out.println("Lich su giao dich trong");
+            return;
+        }
+        System.out.println("Lich su 3 lan giao dich gan nhat:");
+        int limit = Math.max(history.size() - 3, 0);
+        for (int i = history.size() - 1; i >= limit ; i--) {
+            System.out.println(history.get(i));
+        }
+    }
+
+    private static void exit() {
         System.out.println("Thoát khỏi chương trình");
         System.out.println("In màn hình: Cam on ban da su dung dich vu ATM");
     }
-
 }

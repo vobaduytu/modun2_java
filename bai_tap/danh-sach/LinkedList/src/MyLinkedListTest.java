@@ -21,7 +21,8 @@ class MyLinkedListTest {
         System.out.println("test " + list.indexOf(1));;
         System.out.println("kiem tra phan tu: "+ list.contains(122));
 //        System.out.println("ban sao: " + list.clone());
-        list.clone();
+
+        list.clear();
         list.printList();
     }
 }

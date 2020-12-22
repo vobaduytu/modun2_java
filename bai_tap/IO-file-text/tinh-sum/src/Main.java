@@ -21,6 +21,8 @@ public class Main {
 
             int sum = 0;
             while ((value = br.readLine()) != null) {
+
+                System.out.println(value);
                 int valueOut = Integer.parseInt(value);
                 sum += valueOut;
             }
@@ -31,6 +33,7 @@ public class Main {
             System.out.println("loi so hoc");
         } catch (ArithmeticException e) {
             System.out.println("khong phai so");
+            System.out.println("khong phai so-----");
         } catch (FileNotFoundException e) {
             System.out.println("phai khong ton tai");
         } catch (IOException e) {

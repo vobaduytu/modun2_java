@@ -41,16 +41,13 @@ public class Promotion {
                         ", endDate=" + endDate
                 ;
     }
-
-
-    public static void main(String[] args) {
-        Promotion promotion = new Promotion(10, "25/10/2020", "28/10/2020");
-        System.out.println(promotion);
-        promotion.setPromotionRate(25);
-        promotion.setStartDay("11/11/2020");
-        promotion.setEndDate("20/11/2020");
-        System.out.println("sau khi cap nhat");
-        System.out.println(promotion);
-
-    }
+//
+//    public static void main(String[] args) {
+//        Promotion promotion = new Promotion(10, "25/10/2020", "28/10/2020");
+//        System.out.println(promotion);
+//        promotion.setStartDay("100/100/11");
+//        System.out.println("sau khi thay doi");
+//        System.out.println(promotion);
+//
+//    }
 }

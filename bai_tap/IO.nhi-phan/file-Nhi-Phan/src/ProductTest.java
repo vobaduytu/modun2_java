@@ -44,6 +44,9 @@ public class ProductTest {
     static{
         try {
             productList = (List<Product>) SaveFile.readProductToFile("product.data");
+            if (productList == null){
+                productList = new ArrayList<>();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -53,9 +56,13 @@ public class ProductTest {
 
     public static int size = 0;
 
-
     public static void add(int id, String nameProduct, String manufacturer, int price) throws IOException {
-        productList.add(new Product(id, nameProduct, manufacturer, price));
+
+        Product product = findById(id);
+        if (product == null){
+            productList.add(new Product(id, nameProduct, manufacturer, price));
+        }
+        else System.out.println("id không thể trùng");
         size++;
         saveProductToFile();
     }
@@ -65,6 +72,13 @@ public class ProductTest {
 
     public static void saveProductToFile() throws IOException {
         SaveFile.writeProductToFile(productList, "product.data");
+    }
+    public static Product findById(int id) {
+        for (Product product : productList) {
+            if (id == product.getId())
+                return product;
+        }
+        return null;
     }
 
 }
