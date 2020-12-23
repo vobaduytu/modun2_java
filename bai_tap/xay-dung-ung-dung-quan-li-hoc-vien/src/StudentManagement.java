@@ -88,7 +88,7 @@ public class StudentManagement {
                 if (currentId > maxId)
                     maxId = currentId;
             }
-            id = maxId ;
+            id = maxId;
         } catch (IOException | ClassNotFoundException e) {
             studentList = new ArrayList<>();
             id = 0;
@@ -133,7 +133,7 @@ public class StudentManagement {
 
     public static void InformationStudent() {
         System.out.println("nhập id học viên: ");
-        int nameRepair =Integer.parseInt(scanner.nextLine()) ;
+        int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy tên");
@@ -165,18 +165,17 @@ public class StudentManagement {
 
     public static void inputScore() throws IOException {
         System.out.println("nhập id học viên muốn nhập điểm: ");
-      int nameRepair = Integer.parseInt(scanner.nextLine());
+        int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
             return;
         }
-        System.out.println("nhập ô điểm:");
-        int point = Integer.parseInt(scanner.nextLine());
+
+        int point = choie("nhập ô điểm");
         if (point == 1) {
             if (!student.statusPont1) {
-                System.out.println("1: nhập điểm lần 1");
-                int p1 = Integer.parseInt(scanner.nextLine());
+                int p1 = point("nhập điểm");
                 student.statusPont1 = true;
                 student.setPoint1(p1);
             } else System.out.println("điểm đã được nhập");
@@ -184,24 +183,26 @@ public class StudentManagement {
         }
         if (point == 2) {
             if (!student.statusPont2) {
-                System.out.println("2: nhập điểm lần 2");
-                int p2 = Integer.parseInt(scanner.nextLine());
+
+                int p2 = point("nhập điểm");
                 student.statusPont2 = true;
                 student.setPoint2(p2);
             } else System.out.println("điểm đã được nhập");
         }
         if (point == 3) {
             if (!student.statusPont3) {
-                System.out.println("3: nhập điểm lần 3");
-                int p3 = Integer.parseInt(scanner.nextLine());
+
+                int p3 = point("nhập điểm");
+                ;
                 student.statusPont3 = true;
                 student.setPoint3(p3);
             } else System.out.println("điểm đã được nhập");
         }
         if (point == 4) {
             if (!student.statusPont4) {
-                System.out.println("4: nhập điểm lần 4");
-                int p4 = Integer.parseInt(scanner.nextLine());
+
+                int p4 = point("nhập điểm");
+                ;
                 student.statusPont4 = true;
                 student.setPoint4(p4);
             } else System.out.println("điểm đã được nhập");
@@ -212,42 +213,46 @@ public class StudentManagement {
 
     public static void repairScore() throws IOException {
         System.out.println("nhập id học viên muốn sửa điểm: ");
-      int nameRepair = Integer.parseInt(scanner.nextLine());
+        int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
             return;
         }
-        System.out.println("nhập ô điểm muốn sửa:");
-        int point = Integer.parseInt(scanner.nextLine());
+
+        int point = choie("nhập ô điểm");
         if (point == 1) {
 
 
             if (student.statusPont1) {
-                System.out.println("1: sửa ô điểm 1");
-                int p1 = Integer.parseInt(scanner.nextLine());
+
+                int p1 = point("nhập điểm");
+                ;
                 student.setPoint1(p1);
 
             } else System.out.println("điểm chưa được nhập");
         }
         if (point == 2) {
             if (student.statusPont2) {
-                System.out.println("2: sửa ô điểm  2");
-                int p2 = Integer.parseInt(scanner.nextLine());
+
+                int p2 = point("nhập điểm");
+                ;
                 student.setPoint2(p2);
             } else System.out.println("điểm chưa được nhập");
         }
         if (point == 3) {
             if (student.statusPont3) {
-                System.out.println("3: sửa ô điểm 3");
-                int p3 = Integer.parseInt(scanner.nextLine());
+
+                int p3 = point("nhập điểm");
+                ;
                 student.setPoint3(p3);
             } else System.out.println("điểm chưa được nhập");
         }
         if (point == 4) {
             if (student.statusPont4) {
-                System.out.println("4:sửa ô điểm 4");
-                int p4 = Integer.parseInt(scanner.nextLine());
+
+                int p4 = point("nhập điểm");
+                ;
                 student.setPoint4(p4);
             } else System.out.println("điểm chưa được nhập");
         }
@@ -279,6 +284,36 @@ public class StudentManagement {
         } catch (Exception e) {
             System.out.println("phải là một số");
             return age(meseage);
+        }
+    }
+
+    public static int point(String meesage) {
+        System.out.println(meesage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 10 || num < 0) {
+                System.out.println("điểm phải trong khoảng 0 --> 10");
+                return point(meesage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println("phải là một số");
+            return point(meesage);
+        }
+    }
+
+    public static int choie(String me) {
+        System.out.println(me);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 4 || num < 1) {
+                System.out.println("điểm phải trong khoảng 0 --> 4");
+                return point(me);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println("phải là một số");
+            return choie(me);
         }
     }
 }
