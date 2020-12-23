@@ -96,9 +96,19 @@ public class StudentManagement {
     }
 
     public static void showStudent() {
+        System.out.format("%-3s | ", "Id");
+        System.out.format("%-25s | ", "tên");
+        System.out.format("%-10s | ", "tuổi");
+        System.out.format("%-10s | ", "giới tính");
+        System.out.format("%-10s |", "điểm 1");
+        System.out.format("%-10s |", "điểm 2");
+        System.out.format("%-10s |", "điểm 3");
+        System.out.format("%-10s |", "điểm 4");
+        System.out.format("%-10s |", "điểm 5");
+        System.out.println("\n");
         for (Student student : studentList) {
-            System.out.format("%-5s | ", student.getId());
-            System.out.format("%-20s | ", student.getName());
+            System.out.format("%-3s | ", student.getId());
+            System.out.format("%-25s | ", student.getName());
             System.out.format("%-10s | ", student.getAge());
             System.out.format("%-10s | ", student.getSex());
             System.out.format("%-10s |", student.getPoint1());
@@ -107,6 +117,7 @@ public class StudentManagement {
             System.out.format("%-10s |", student.getPoint4());
             System.out.format("%-10s |", student.getPointMedium());
             System.out.println("\n");
+
         }
     }
 
