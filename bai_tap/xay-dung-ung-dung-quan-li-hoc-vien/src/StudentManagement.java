@@ -123,17 +123,17 @@ public class StudentManagement {
         StudentFile.writeProductToFile(studentList, "student.data");
     }
 
-    public static Student getProductByName(String name) {
+    public static Student getProductByName(int numId) {
         for (Student student : studentList) {
-            if (name.equals(student.getName()))
+            if (numId == student.getId())
                 return student;
         }
         return null;
     }
 
     public static void InformationStudent() {
-        System.out.println("nhập tên học viên: ");
-        String nameRepair = scanner.nextLine();
+        System.out.println("nhập id học viên: ");
+        int nameRepair =Integer.parseInt(scanner.nextLine()) ;
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy tên");
@@ -151,8 +151,8 @@ public class StudentManagement {
     }
 
     public static void RemoveStudent() throws IOException {
-        System.out.println("nhập tên học viên: ");
-        String nameRepair = scanner.nextLine();
+        System.out.println("nhập id học viên: ");
+        int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
@@ -164,8 +164,8 @@ public class StudentManagement {
     }
 
     public static void inputScore() throws IOException {
-        System.out.println("nhập tên học viên muốn nhập điểm: ");
-        String nameRepair = scanner.nextLine();
+        System.out.println("nhập id học viên muốn nhập điểm: ");
+      int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
@@ -211,8 +211,8 @@ public class StudentManagement {
     }
 
     public static void repairScore() throws IOException {
-        System.out.println("nhập tên học viên muốn sửa điểm: ");
-        String nameRepair = scanner.nextLine();
+        System.out.println("nhập id học viên muốn sửa điểm: ");
+      int nameRepair = Integer.parseInt(scanner.nextLine());
         Student student = getProductByName(nameRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
