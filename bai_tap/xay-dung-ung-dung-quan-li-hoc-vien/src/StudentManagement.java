@@ -3,8 +3,8 @@ import java.util.*;
 
 public class StudentManagement {
 
-
     public static void main(String[] args) throws IOException {
+
         Scanner input = new Scanner(System.in);
         boolean cont = true;
         do {
@@ -24,11 +24,12 @@ public class StudentManagement {
                 case 2:
 
                     String newName = deleteWrite("nhập tên học viên");
+                    while (newName.length() == 0){
+                        System.out.println("yêu cầu nhập tên");
+                        newName =deleteWrite("nhập tên học viên(bắt buộc)");
+                    }
 
-                    System.out.println("nhập giới tính: ");
-                    System.out.println("Nam/Nu");
-
-                    String newSex = scanner.nextLine();
+                    String newSex = removeWrite("nhập giới tính");
                     while (newSex != null) {
                         if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
                             break;
@@ -70,7 +71,7 @@ public class StudentManagement {
         while (cont);
     }
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     public static ArrayList<Student> studentList = new ArrayList<>();
     public static int size = 0;
     private static int id = 0;
@@ -98,7 +99,7 @@ public class StudentManagement {
 
     public static void showStudent() {
         System.out.format("%-3s | ", "Id");
-        System.out.format("%-25s | ", "tên");
+        System.out.format("%-50s | ", "tên");
         System.out.format("%-10s | ", "tuổi");
         System.out.format("%-10s | ", "giới tính");
         System.out.format("%-10s |", "điểm 1");
@@ -106,10 +107,11 @@ public class StudentManagement {
         System.out.format("%-10s |", "điểm 3");
         System.out.format("%-10s |", "điểm 4");
         System.out.format("%-10s |", "điểm 5");
-        System.out.println("\n");
+        System.out.format("\n");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
         for (Student student : studentList) {
             System.out.format("%-3s | ", student.getId());
-            System.out.format("%-25s | ", student.getName());
+            System.out.format("%-50s | ", student.getName());
             System.out.format("%-10s | ", student.getAge());
             System.out.format("%-10s | ", student.getSex());
             System.out.format("%-10s |", student.getPoint1());
@@ -117,7 +119,7 @@ public class StudentManagement {
             System.out.format("%-10s |", student.getPoint3());
             System.out.format("%-10s |", student.getPoint4());
             System.out.format("%-10s |", student.getPointMedium());
-            System.out.println("\n");
+            System.out.format("\n");
 
         }
     }
@@ -144,139 +146,178 @@ public class StudentManagement {
     }
 
     public static void InformationStudent() {
-        System.out.println("nhập id học viên: ");
-        int idRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductById(idRepair);
-        if (student == null) {
-            System.out.println("không tìm thấy tên");
-            return;
+        System.out.println("nhập id học viên muốn sửa: ");
+        try {
+            int idRepair = Integer.parseInt(scanner.nextLine());
+            Student student = getProductById(idRepair);
+            if (student == null) {
+                System.out.println("không tìm thấy tên");
+                return;
+            } else {
+
+
+                String newName = deleteWrite("nhập tên");
+                while (newName.length() == 0){
+                    System.out.println("yêu cầu nhập tên");
+                    newName =deleteWrite("nhập tên");
+                }
+                     student.setName(newName);
+                System.out.println("nhập giới tính");
+                String newSex = scanner.nextLine();
+                while (newSex.length() == 0  || newSex != null){
+                    if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
+                        break;
+                    System.out.println("bạn nhập sai giới tính:");
+                    System.out.println("nhập lại:");
+                    newSex = scanner.nextLine();
+                }
+                student.setSex(newSex);
+
+                try {
+                    int newAge = age("nhập tuổi");
+                    student.setAge(newAge);
+                } catch (Exception e) {
+                    System.out.println("bạn đã không sửa tuổi");
+                }
+                saveProductToFile();
+            }
+        } catch (Exception e) {
+            System.out.println("bạn không nhập id");
         }
-        System.out.println("nhập tên");
-        String newName = scanner.nextLine();
-        System.out.println("nhập giới tính");
-        String newSex = scanner.nextLine();
-        System.out.println("nhập tuổi");
-        int newAge = Integer.parseInt(scanner.nextLine());
-        student.setName(newName);
-        student.setSex(newSex);
-        student.setAge(newAge);
+
+
     }
 
     public static void RemoveStudent() throws IOException {
         System.out.println("nhập id học viên: ");
-        int idRepair= Integer.parseInt(scanner.nextLine());
-        Student student = getProductById(idRepair);
-        if (student == null) {
-            System.out.println("không tìm thấy học viên");
-            return;
-        }
-        studentList.remove(student);
-        System.out.println("đối tượng bị loại bỏ");
-        
+        try {
+            int idRepair = Integer.parseInt(scanner.nextLine());
+            Student student = getProductById(idRepair);
+            if (student == null) {
+                System.out.println("không tìm thấy học viên");
+                return;
+            }
+            studentList.remove(student);
+            System.out.println("đối tượng bị loại bỏ");
 
-        saveProductToFile();
+
+            saveProductToFile();
+        }catch (Exception e){
+            System.out.println("bạn chưa nhập id");
+        }
+
     }
 
     public static void inputScore() throws IOException {
         System.out.println("nhập id học viên muốn nhập điểm: ");
-        int idRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductById(idRepair);
-        if (student == null) {
-            System.out.println("không tìm thấy học viên");
-            return;
+        try {
+            int idRepair = Integer.parseInt(scanner.nextLine());
+            Student student = getProductById(idRepair);
+            if (student == null) {
+                System.out.println("không tìm thấy học viên");
+                return;
+            }
+
+            int point = choie("nhập ô điểm");
+            if (point == 1) {
+                if (!student.statusPont1) {
+                    int p1 = point("nhập điểm");
+                    student.statusPont1 = true;
+                    student.setPoint1(p1);
+                } else System.out.println("điểm đã được nhập");
+
+            }
+            if (point == 2) {
+                if (!student.statusPont2) {
+
+                    int p2 = point("nhập điểm");
+                    student.statusPont2 = true;
+                    student.setPoint2(p2);
+                } else System.out.println("điểm đã được nhập");
+            }
+            if (point == 3) {
+                if (!student.statusPont3) {
+
+                    int p3 = point("nhập điểm");
+
+                    student.statusPont3 = true;
+                    student.setPoint3(p3);
+                } else System.out.println("điểm đã được nhập");
+            }
+            if (point == 4) {
+                if (!student.statusPont4) {
+
+                    int p4 = point("nhập điểm");
+
+                    student.statusPont4 = true;
+                    student.setPoint4(p4);
+                } else System.out.println("điểm đã được nhập");
+            }
+            student.setPointMedium(student.getPointMedium());
+            saveProductToFile();
+        }catch (Exception e){
+            System.out.println("bạn chưa nhập id");
         }
 
-        int point = choie("nhập ô điểm");
-        if (point == 1) {
-            if (!student.statusPont1) {
-                int p1 = point("nhập điểm");
-                student.statusPont1 = true;
-                student.setPoint1(p1);
-            } else System.out.println("điểm đã được nhập");
-
-        }
-        if (point == 2) {
-            if (!student.statusPont2) {
-
-                int p2 = point("nhập điểm");
-                student.statusPont2 = true;
-                student.setPoint2(p2);
-            } else System.out.println("điểm đã được nhập");
-        }
-        if (point == 3) {
-            if (!student.statusPont3) {
-
-                int p3 = point("nhập điểm");
-                ;
-                student.statusPont3 = true;
-                student.setPoint3(p3);
-            } else System.out.println("điểm đã được nhập");
-        }
-        if (point == 4) {
-            if (!student.statusPont4) {
-
-                int p4 = point("nhập điểm");
-                ;
-                student.statusPont4 = true;
-                student.setPoint4(p4);
-            } else System.out.println("điểm đã được nhập");
-        }
-        student.setPointMedium(student.getPointMedium());
-        saveProductToFile();
     }
 
     public static void repairScore() throws IOException {
         System.out.println("nhập id học viên muốn sửa điểm: ");
-        int idRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductById(idRepair);
-        if (student == null) {
-            System.out.println("không tìm thấy học viên");
-            return;
+        try {
+            int idRepair = Integer.parseInt(scanner.nextLine());
+            Student student = getProductById(idRepair);
+            if (student == null) {
+                System.out.println("không tìm thấy học viên");
+                return;
+            }
+
+            int point = choie("nhập ô điểm");
+            if (point == 1) {
+
+
+                if (student.statusPont1) {
+
+                    int p1 = point("nhập điểm");
+
+                    student.setPoint1(p1);
+
+                } else System.out.println("điểm chưa được nhập");
+            }
+            if (point == 2) {
+                if (student.statusPont2) {
+
+                    int p2 = point("nhập điểm");
+
+                    student.setPoint2(p2);
+                } else System.out.println("điểm chưa được nhập");
+            }
+            if (point == 3) {
+                if (student.statusPont3) {
+
+                    int p3 = point("nhập điểm");
+
+                    student.setPoint3(p3);
+                } else System.out.println("điểm chưa được nhập");
+            }
+            if (point == 4) {
+                if (student.statusPont4) {
+
+                    int p4 = point("nhập điểm");
+
+                    student.setPoint4(p4);
+                } else System.out.println("điểm chưa được nhập");
+            }
+            student.setPointMedium(student.getPointMedium());
+            saveProductToFile();
+        }catch (Exception e){
+            System.out.println("bạn chưa nhập id");
         }
 
-        int point = choie("nhập ô điểm");
-        if (point == 1) {
-
-
-            if (student.statusPont1) {
-
-                int p1 = point("nhập điểm");
-                ;
-                student.setPoint1(p1);
-
-            } else System.out.println("điểm chưa được nhập");
-        }
-        if (point == 2) {
-            if (student.statusPont2) {
-
-                int p2 = point("nhập điểm");
-                ;
-                student.setPoint2(p2);
-            } else System.out.println("điểm chưa được nhập");
-        }
-        if (point == 3) {
-            if (student.statusPont3) {
-
-                int p3 = point("nhập điểm");
-                ;
-                student.setPoint3(p3);
-            } else System.out.println("điểm chưa được nhập");
-        }
-        if (point == 4) {
-            if (student.statusPont4) {
-
-                int p4 = point("nhập điểm");
-                ;
-                student.setPoint4(p4);
-            } else System.out.println("điểm chưa được nhập");
-        }
-        student.setPointMedium(student.getPointMedium());
-        saveProductToFile();
     }
 
     public static void sort() {
 
-        Collections.sort(studentList, new Comparator<Student>() {
+        studentList.sort(new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
                 return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
@@ -329,9 +370,20 @@ public class StudentManagement {
             return choie(me);
         }
     }
-    public static String deleteWrite(String name){
+
+    public static String deleteWrite(String name) {
         System.out.println(name);
         String newName = scanner.nextLine();
-        return  newName.replaceAll("\\s\\s+", " ").trim();
+        if (newName.length() < 45) {
+            return newName.replaceAll("\\s\\s+", " ").trim();
+        } else System.out.println("tên không thể quá dài");
+        return deleteWrite(name);
+    }
+
+    public static String removeWrite(String name) {
+        System.out.println(name);
+        String newName = scanner.nextLine();
+        return newName.replaceAll("\\s+", "").trim();
+
     }
 }
