@@ -22,8 +22,9 @@ public class StudentManagement {
                     StudentManagement.showStudent();
                     break;
                 case 2:
-                    System.out.println("nhập tên học viên: ");
-                    String newName = scanner.nextLine();
+
+                    String newName = deleteWrite("nhập tên học viên");
+
                     System.out.println("nhập giới tính: ");
                     System.out.println("Nam/Nu");
 
@@ -134,7 +135,7 @@ public class StudentManagement {
         StudentFile.writeProductToFile(studentList, "student.data");
     }
 
-    public static Student getProductByName(int numId) {
+    public static Student getProductById(int numId) {
         for (Student student : studentList) {
             if (numId == student.getId())
                 return student;
@@ -144,8 +145,8 @@ public class StudentManagement {
 
     public static void InformationStudent() {
         System.out.println("nhập id học viên: ");
-        int nameRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductByName(nameRepair);
+        int idRepair = Integer.parseInt(scanner.nextLine());
+        Student student = getProductById(idRepair);
         if (student == null) {
             System.out.println("không tìm thấy tên");
             return;
@@ -163,21 +164,23 @@ public class StudentManagement {
 
     public static void RemoveStudent() throws IOException {
         System.out.println("nhập id học viên: ");
-        int nameRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductByName(nameRepair);
+        int idRepair= Integer.parseInt(scanner.nextLine());
+        Student student = getProductById(idRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
             return;
         }
         studentList.remove(student);
         System.out.println("đối tượng bị loại bỏ");
+        
+
         saveProductToFile();
     }
 
     public static void inputScore() throws IOException {
         System.out.println("nhập id học viên muốn nhập điểm: ");
-        int nameRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductByName(nameRepair);
+        int idRepair = Integer.parseInt(scanner.nextLine());
+        Student student = getProductById(idRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
             return;
@@ -224,8 +227,8 @@ public class StudentManagement {
 
     public static void repairScore() throws IOException {
         System.out.println("nhập id học viên muốn sửa điểm: ");
-        int nameRepair = Integer.parseInt(scanner.nextLine());
-        Student student = getProductByName(nameRepair);
+        int idRepair = Integer.parseInt(scanner.nextLine());
+        Student student = getProductById(idRepair);
         if (student == null) {
             System.out.println("không tìm thấy học viên");
             return;
@@ -278,7 +281,6 @@ public class StudentManagement {
             public int compare(Student o1, Student o2) {
                 return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
             }
-
         });
         StudentManagement.showStudent();
     }
@@ -326,5 +328,10 @@ public class StudentManagement {
             System.out.println("phải là một số");
             return choie(me);
         }
+    }
+    public static String deleteWrite(String name){
+        System.out.println(name);
+        String newName = scanner.nextLine();
+        return  newName.replaceAll("\\s\\s+", " ").trim();
     }
 }
