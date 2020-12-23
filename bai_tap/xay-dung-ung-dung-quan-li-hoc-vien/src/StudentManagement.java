@@ -2,8 +2,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class StudentManagement {
-    private static String Nam;
-    private static String Nu;
+
 
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
@@ -29,16 +28,16 @@ public class StudentManagement {
                     System.out.println("Nam/Nu");
 
                     String newSex = scanner.nextLine();
-                    while (newSex !=null){
-                        if (newSex.equals("Nam") || newSex.equals("Nu")) break;
+                    while (newSex != null) {
+                        if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
+                            break;
                         System.out.println("bạn nhập sai giới tính:");
                         System.out.println("nhập lại:");
                         newSex = scanner.nextLine();
-
                     }
 
-                    System.out.println("nhập tuổi");
-                    int newAge = Integer.parseInt(scanner.nextLine());
+                    int newAge = age("nhập tuổi");
+
                     StudentManagement.addStudent(newName, newSex, newAge);
                     break;
                 case 3:
@@ -71,24 +70,34 @@ public class StudentManagement {
     }
 
     private static Scanner scanner = new Scanner(System.in);
-    public static List<Student> students = new ArrayList<>();
+    public static ArrayList<Student> studentList = new ArrayList<>();
     public static int size = 0;
+    private static int id = 0;
 
     static {
         try {
-            students = (List<Student>) StudentFile.readProductToFile("product.data");
-            if (students == null) {
-                students = new ArrayList<>();
+            Object studentFile = StudentFile.readProductToFile("student.data");
+            if (studentFile == null) {
+                studentList = new ArrayList<>();
+            } else {
+                studentList = (ArrayList<Student>) studentFile;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            int maxId = 0;
+            for (Student student : studentList) {
+                int currentId = student.getId();
+                if (currentId > maxId)
+                    maxId = currentId;
+            }
+            id = maxId ;
+        } catch (IOException | ClassNotFoundException e) {
+            studentList = new ArrayList<>();
+            id = 0;
         }
     }
 
     public static void showStudent() {
-        for (Student student : students) {
+        for (Student student : studentList) {
+            System.out.format("%-5s | ", student.getId());
             System.out.format("%-20s | ", student.getName());
             System.out.format("%-10s | ", student.getAge());
             System.out.format("%-10s | ", student.getSex());
@@ -103,17 +112,19 @@ public class StudentManagement {
 
 
     public static void addStudent(String name, String sex, int age) throws IOException {
-        students.add(new Student(name, sex, age));
+        studentList.add(new Student(++id, name, sex, age));
+
         size++;
+
         saveProductToFile();
     }
 
     public static void saveProductToFile() throws IOException {
-        StudentFile.writeProductToFile(students, "product.data");
+        StudentFile.writeProductToFile(studentList, "student.data");
     }
 
     public static Student getProductByName(String name) {
-        for (Student student : students) {
+        for (Student student : studentList) {
             if (name.equals(student.getName()))
                 return student;
         }
@@ -147,7 +158,7 @@ public class StudentManagement {
             System.out.println("không tìm thấy học viên");
             return;
         }
-        students.remove(student);
+        studentList.remove(student);
         System.out.println("đối tượng bị loại bỏ");
         saveProductToFile();
     }
@@ -166,8 +177,8 @@ public class StudentManagement {
             if (!student.statusPont1) {
                 System.out.println("1: nhập điểm lần 1");
                 int p1 = Integer.parseInt(scanner.nextLine());
-                 student.statusPont1 = true;
-                    student.setPoint1(p1);
+                student.statusPont1 = true;
+                student.setPoint1(p1);
             } else System.out.println("điểm đã được nhập");
 
         }
@@ -176,7 +187,7 @@ public class StudentManagement {
                 System.out.println("2: nhập điểm lần 2");
                 int p2 = Integer.parseInt(scanner.nextLine());
                 student.statusPont2 = true;
-                    student.setPoint2(p2);
+                student.setPoint2(p2);
             } else System.out.println("điểm đã được nhập");
         }
         if (point == 3) {
@@ -184,7 +195,7 @@ public class StudentManagement {
                 System.out.println("3: nhập điểm lần 3");
                 int p3 = Integer.parseInt(scanner.nextLine());
                 student.statusPont3 = true;
-                    student.setPoint3(p3);
+                student.setPoint3(p3);
             } else System.out.println("điểm đã được nhập");
         }
         if (point == 4) {
@@ -192,7 +203,7 @@ public class StudentManagement {
                 System.out.println("4: nhập điểm lần 4");
                 int p4 = Integer.parseInt(scanner.nextLine());
                 student.statusPont4 = true;
-                    student.setPoint4(p4);
+                student.setPoint4(p4);
             } else System.out.println("điểm đã được nhập");
         }
         student.setPointMedium(student.getPointMedium());
@@ -246,7 +257,7 @@ public class StudentManagement {
 
     public static void sort() {
 
-        Collections.sort(students, new Comparator<Student>() {
+        Collections.sort(studentList, new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
                 return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
@@ -256,5 +267,18 @@ public class StudentManagement {
         StudentManagement.showStudent();
     }
 
-
+    public static int age(String meseage) {
+        System.out.println(meseage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num <= 0) {
+                System.out.println("tuổi phải lớn hơn 0");
+                return age(meseage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println("phải là một số");
+            return age(meseage);
+        }
+    }
 }

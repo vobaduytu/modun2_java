@@ -2,9 +2,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 public class Student implements Serializable {
-
     private static final long serialVersionUID = 1L;
-    public int id = 1;
+    public int id;
     public String name;
     public String sex;
     public int age;
@@ -17,11 +16,18 @@ public class Student implements Serializable {
     public boolean statusPont3 = false;
     public boolean statusPont4 = false;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public double pointMedium;
 
-    public Student(String name, String sex, int age) {
-
+    public Student(int id,String name, String sex, int age) {
+        this.id=id;
         this.name = name;
         this.sex = sex;
         this.age = age;
