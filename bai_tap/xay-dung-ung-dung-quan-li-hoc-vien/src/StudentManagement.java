@@ -2,6 +2,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class StudentManagement {
+    private static String Nam;
+    private static String Nu;
+
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         boolean cont = true;
@@ -23,7 +26,17 @@ public class StudentManagement {
                     System.out.println("nhập tên học viên: ");
                     String newName = scanner.nextLine();
                     System.out.println("nhập giới tính: ");
+                    System.out.println("Nam/Nu");
+
                     String newSex = scanner.nextLine();
+                    while (newSex !=null){
+                        if (newSex.equals("Nam") || newSex.equals("Nu")) break;
+                        System.out.println("bạn nhập sai giới tính:");
+                        System.out.println("nhập lại:");
+                        newSex = scanner.nextLine();
+
+                    }
+
                     System.out.println("nhập tuổi");
                     int newAge = Integer.parseInt(scanner.nextLine());
                     StudentManagement.addStudent(newName, newSex, newAge);
