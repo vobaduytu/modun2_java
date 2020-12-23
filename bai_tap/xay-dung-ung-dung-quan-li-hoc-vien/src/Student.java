@@ -11,6 +11,12 @@ public class Student implements Serializable {
     public double point2;
     public double point3;
     public double point4;
+    public boolean statusPont1 = false;
+    public boolean statusPont2 = false;
+    public boolean statusPont3 = false;
+    public boolean statusPont4 = false;
+
+
     public double pointMedium;
 
     public Student(String name, String sex, int age) {
@@ -20,7 +26,7 @@ public class Student implements Serializable {
         this.age = age;
     }
 
-    public Student(double point1, double point2, double point3, double point4,double pointMedium) {
+    public Student(double point1, double point2, double point3, double point4, double pointMedium) {
         this.point1 = point1;
         this.point2 = point2;
         this.point3 = point3;
@@ -85,7 +91,7 @@ public class Student implements Serializable {
     }
 
     public double getPointMedium() {
-        return (point1+point2+point3+point4)/4;
+        return (point1 + point2 + point3 + point4) / 4;
     }
 
     public void setPointMedium(double pointMedium) {
@@ -106,7 +112,6 @@ public class Student implements Serializable {
                         " pointMedium =" + pointMedium + "\n"
                 ;
     }
-
 
 
 }

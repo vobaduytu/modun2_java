@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-public class StudentManagement  {
+public class StudentManagement {
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         boolean cont = true;
@@ -38,10 +38,11 @@ public class StudentManagement  {
                     StudentManagement.inputScore();
                     break;
                 case 6:
-                   StudentManagement.repairScore();
-                 break;
+                    StudentManagement.repairScore();
+                    break;
 
                 case 7:
+                    System.out.println("theo thứ tự tăng dần");
                     StudentManagement.sort();
                     break;
                 case 8:
@@ -75,14 +76,14 @@ public class StudentManagement  {
 
     public static void showStudent() {
         for (Student student : students) {
-            System.out.format("%20s | ", student.getName());
-            System.out.format("%10s | ", student.getAge());
-            System.out.format("%10s | ", student.getSex());
-            System.out.format("%10s |", student.getPoint1());
-            System.out.format("%10s |", student.getPoint2());
-            System.out.format("%10s |", student.getPoint3());
-            System.out.format("%10s |", student.getPoint4());
-            System.out.format("%10s", student.getPointMedium());
+            System.out.format("%-20s | ", student.getName());
+            System.out.format("%-10s | ", student.getAge());
+            System.out.format("%-10s | ", student.getSex());
+            System.out.format("%-10s |", student.getPoint1());
+            System.out.format("%-10s |", student.getPoint2());
+            System.out.format("%-10s |", student.getPoint3());
+            System.out.format("%-10s |", student.getPoint4());
+            System.out.format("%-10s |", student.getPointMedium());
             System.out.println("\n");
         }
     }
@@ -149,41 +150,42 @@ public class StudentManagement  {
         System.out.println("nhập ô điểm:");
         int point = Integer.parseInt(scanner.nextLine());
         if (point == 1) {
-            if (student.getPoint1()==0){
+            if (!student.statusPont1) {
                 System.out.println("1: nhập điểm lần 1");
                 int p1 = Integer.parseInt(scanner.nextLine());
-                student.setPoint1(p1);
-            }
-          else System.out.println("điểm đã được nhập");
+                 student.statusPont1 = true;
+                    student.setPoint1(p1);
+            } else System.out.println("điểm đã được nhập");
+
         }
         if (point == 2) {
-            if (student.getPoint2()==0){
+            if (!student.statusPont2) {
                 System.out.println("2: nhập điểm lần 2");
                 int p2 = Integer.parseInt(scanner.nextLine());
-                student.setPoint2(p2);
-            }
-            else System.out.println("điểm đã được nhập");
+                student.statusPont2 = true;
+                    student.setPoint2(p2);
+            } else System.out.println("điểm đã được nhập");
         }
         if (point == 3) {
-            if (student.getPoint3()==0){
+            if (!student.statusPont3) {
                 System.out.println("3: nhập điểm lần 3");
                 int p3 = Integer.parseInt(scanner.nextLine());
-                student.setPoint3(p3);
-            }
-            else System.out.println("điểm đã được nhập");
+                student.statusPont3 = true;
+                    student.setPoint3(p3);
+            } else System.out.println("điểm đã được nhập");
         }
         if (point == 4) {
-            if (student.getPoint4() == 0){
+            if (!student.statusPont4) {
                 System.out.println("4: nhập điểm lần 4");
                 int p4 = Integer.parseInt(scanner.nextLine());
-                student.setPoint4(p4);
-            }
-
-            else System.out.println("điểm đã được nhập");
+                student.statusPont4 = true;
+                    student.setPoint4(p4);
+            } else System.out.println("điểm đã được nhập");
         }
         student.setPointMedium(student.getPointMedium());
         saveProductToFile();
     }
+
     public static void repairScore() throws IOException {
         System.out.println("nhập tên học viên muốn sửa điểm: ");
         String nameRepair = scanner.nextLine();
@@ -195,49 +197,51 @@ public class StudentManagement  {
         System.out.println("nhập ô điểm muốn sửa:");
         int point = Integer.parseInt(scanner.nextLine());
         if (point == 1) {
-            if (student.getPoint1()>0){
+
+
+            if (student.statusPont1) {
                 System.out.println("1: sửa ô điểm 1");
                 int p1 = Integer.parseInt(scanner.nextLine());
                 student.setPoint1(p1);
-            }
-            else System.out.println("điểm chưa được nhập");
+
+            } else System.out.println("điểm chưa được nhập");
         }
         if (point == 2) {
-            if (student.getPoint2()>0){
+            if (student.statusPont2) {
                 System.out.println("2: sửa ô điểm  2");
                 int p2 = Integer.parseInt(scanner.nextLine());
                 student.setPoint2(p2);
-            }
-            else System.out.println("điểm chưa được nhập");
+            } else System.out.println("điểm chưa được nhập");
         }
         if (point == 3) {
-            if (student.getPoint3()>0){
+            if (student.statusPont3) {
                 System.out.println("3: sửa ô điểm 3");
                 int p3 = Integer.parseInt(scanner.nextLine());
                 student.setPoint3(p3);
-            }
-            else System.out.println("điểm chưa được nhập");
+            } else System.out.println("điểm chưa được nhập");
         }
         if (point == 4) {
-            if (student.getPoint4() >0){
+            if (student.statusPont4) {
                 System.out.println("4:sửa ô điểm 4");
                 int p4 = Integer.parseInt(scanner.nextLine());
                 student.setPoint4(p4);
-            }
-
-            else System.out.println("điểm chưa được nhập");
+            } else System.out.println("điểm chưa được nhập");
         }
         student.setPointMedium(student.getPointMedium());
         saveProductToFile();
     }
-public static void sort(){
 
-    Collections.sort(students, new Comparator<Student>() {
-        @Override
-        public int compare(Student o1, Student o2) {
-            return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
-        }
+    public static void sort() {
 
-    });
-}
+        Collections.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
+            }
+
+        });
+        StudentManagement.showStudent();
+    }
+
+
 }
