@@ -3,73 +3,81 @@ import java.util.*;
 
 public class StudentManagement {
 
-    public static void main(String[] args) throws IOException {
+    public static void main() throws IOException {
 
         Scanner input = new Scanner(System.in);
-        boolean cont = true;
-        do {
-            System.out.println("1: Xem danh sách học viên");
-            System.out.println("2: Thêm học viên");
-            System.out.println("3: Sửa thông tin học viên");
-            System.out.println("4: Xóa học viên");
-            System.out.println("5: Nhập điểm học viên ");
-            System.out.println("6: Sửa điểm học viên");
-            System.out.println("7: Xếp loại học viên");
-            System.out.println("8: exit");
-            int chon = input.nextInt();
-            switch (chon) {
-                case 1:
-                    StudentManagement.showStudent();
-                    break;
-                case 2:
+        try {
+            boolean cont = true;
+            do {
+                System.out.println("1: Xem danh sách học viên");
+                System.out.println("2: Thêm học viên");
+                System.out.println("3: Sửa thông tin học viên");
+                System.out.println("4: Xóa học viên");
+                System.out.println("5: Nhập điểm học viên ");
+                System.out.println("6: Sửa điểm học viên");
+                System.out.println("7: Xếp loại học viên");
+                System.out.println("8: exit");
 
-                    String newName =validateName("nhập tên học viên");
-                    while (newName.length() == 0) {
-                        System.out.println("yêu cầu nhập tên");
-                        newName = deleteWrite("nhập tên học viên(bắt buộc)");
-                    }
+                int chon = input.nextInt();
 
-                    String newSex = removeWrite("nhập giới tính");
-                    while (newSex != null) {
-                        if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
-                            break;
-                        System.out.println("bạn nhập sai giới tính:");
-                        System.out.println("nhập lại:");
-                        newSex = scanner.nextLine();
-                    }
+                switch (chon) {
+                    case 1:
+                        StudentManagement.showStudent();
+                        break;
+                    case 2:
 
-                    int newAge = age("nhập tuổi");
+                        String newName = validateName("nhập tên học viên");
+                        while (newName.length() == 0) {
+                            System.out.println("yêu cầu nhập tên");
+                            newName = validateName("nhập tên học viên(bắt buộc)");
+                        }
 
-                    StudentManagement.addStudent(newName, newSex, newAge);
-                    break;
-                case 3:
-                    StudentManagement.informationStudent();
-                    break;
-                case 4:
-                    StudentManagement.RemoveStudent();
-                    break;
-                case 5:
-                    StudentManagement.inputScore();
-                    break;
-                case 6:
-                    StudentManagement.repairScore();
-                    break;
+                        String newSex =removeWrite("nhập giới tính");
+                        while (newSex != null) {
+                            if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
+                                break;
+                            System.out.println("bạn nhập sai giới tính:");
+                            System.out.println("nhập lại:");
+                            newSex = removeWrite("nhập giới tính");
+                        }
 
-                case 7:
-                    System.out.println("theo thứ tự tăng dần");
-                    StudentManagement.sort();
-                    break;
-                case 8:
-                    System.out.println("tạm biệt......");
-                    return;
-                default:
-                    System.err.println("nhap sai ");
-                    cont = false;
-                    break;
+                        int newAge = age("nhập tuổi");
+
+                        StudentManagement.addStudent(newName, newSex, newAge);
+                        break;
+                    case 3:
+                        StudentManagement.informationStudent();
+                        break;
+                    case 4:
+                        StudentManagement.RemoveStudent();
+                        break;
+                    case 5:
+                        StudentManagement.inputScore();
+                        break;
+                    case 6:
+                        StudentManagement.repairScore();
+                        break;
+
+                    case 7:
+                        System.out.println("theo thứ tự tăng dần");
+                        StudentManagement.sort();
+                        break;
+                    case 8:
+                        System.out.println("tạm biệt......");
+                        return;
+                    default:
+                        System.err.println("nhap sai ");
+                        System.out.println("chọn lại");
+                        break;
+                }
             }
+            while (cont);
+        }catch (Exception e){
+            System.out.println("chọn lại: ");
+            main();
         }
-        while (cont);
-    }
+        }
+
 
     private static final Scanner scanner = new Scanner(System.in);
     public static ArrayList<Student> studentList = new ArrayList<>();
@@ -97,6 +105,7 @@ public class StudentManagement {
         }
     }
 
+    //hiển thị
     public static void showStudent() {
         System.out.format("%-3s | ", "Id");
         System.out.format("%-50s | ", "tên");
@@ -106,7 +115,7 @@ public class StudentManagement {
         System.out.format("%-10s |", "điểm 2");
         System.out.format("%-10s |", "điểm 3");
         System.out.format("%-10s |", "điểm 4");
-        System.out.format("%-10s |", "điểm 5");
+        System.out.format("%-10s |", "điểm TB");
         System.out.format("\n");
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
         for (Student student : studentList) {
@@ -121,15 +130,15 @@ public class StudentManagement {
             System.out.format("%-10s |", student.getPointMedium());
             System.out.format("\n");
 
+
         }
     }
 
-
+    //lưu file
     public static void addStudent(String name, String sex, int age) throws IOException {
         studentList.add(new Student(++id, name, sex, age));
 
         size++;
-
         saveProductToFile();
     }
 
@@ -137,6 +146,7 @@ public class StudentManagement {
         StudentFile.writeProductToFile(studentList, "student.data");
     }
 
+    // kiểm tra id có tồn tại
     public static Student getProductById(int numId) {
         for (Student student : studentList) {
             if (numId == student.getId())
@@ -145,6 +155,7 @@ public class StudentManagement {
         return null;
     }
 
+    //sửa thông tin học viên
     public static void informationStudent() {
         System.out.println("nhập id học viên muốn sửa: ");
         try {
@@ -159,17 +170,17 @@ public class StudentManagement {
                 String newName = validateName("nhập tên");
                 while (newName.length() == 0) {
                     System.out.println("yêu cầu nhập tên");
-                    newName = deleteWrite("nhập tên");
+                    newName = validateName("nhập tên");
                 }
                 student.setName(newName);
 
-                String newSex = removeWrite("nhập giới tính");
+                String newSex = deleteWrite("nhập giới tính");
                 while (newSex.length() == 0 || newSex != null) {
                     if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
                         break;
                     System.out.println("bạn nhập sai giới tính:");
                     System.out.println("nhập lại:");
-                    newSex = scanner.nextLine();
+                    newSex = deleteWrite("nhập giới tính");
                 }
                 student.setSex(newSex);
 
@@ -188,6 +199,7 @@ public class StudentManagement {
 
     }
 
+    //xóa học viên
     public static void RemoveStudent() throws IOException {
         System.out.println("nhập id học viên: ");
         try {
@@ -208,6 +220,7 @@ public class StudentManagement {
 
     }
 
+    //thêm điểm
     public static void inputScore() throws IOException {
         System.out.println("nhập id học viên muốn nhập điểm: ");
         try {
@@ -261,6 +274,7 @@ public class StudentManagement {
 
     }
 
+    //sửa điểm
     public static void repairScore() throws IOException {
         System.out.println("nhập id học viên muốn sửa điểm: ");
         try {
@@ -270,10 +284,8 @@ public class StudentManagement {
                 System.out.println("không tìm thấy học viên");
                 return;
             }
-
             int point = choie("nhập ô điểm");
             if (point == 1) {
-
 
                 if (student.statusPont1) {
 
@@ -315,7 +327,8 @@ public class StudentManagement {
 
     }
 
-    public static void sort() {
+    // sắp xếp
+    public static void sort()  {
 
         studentList.sort(new Comparator<Student>() {
             @Override
@@ -323,7 +336,9 @@ public class StudentManagement {
                 return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
             }
         });
+
         StudentManagement.showStudent();
+
     }
 
     public static int age(String meseage) {
@@ -371,22 +386,14 @@ public class StudentManagement {
         }
     }
 
-    public static String deleteWrite(String name) {
-        System.out.println(name);
-        String newName = scanner.nextLine();
-        if (newName.length() < 45) {
-            return newName.replaceAll("\\s\\s+", " ").trim();
-        } else System.out.println("tên không thể quá dài");
-        return deleteWrite(name);
-    }
-
+// xóa khoảng trống giới tính
     public static String removeWrite(String name) {
         System.out.println(name);
         String newName = scanner.nextLine();
         return newName.replaceAll("\\s+", "").trim();
 
     }
-
+//hiển thị tên
     private static String validateName(String mess) {
         System.out.println(mess);
         try {
@@ -428,6 +435,12 @@ public class StudentManagement {
             return validateName(mess);
         }
     }
+    // xóa khoảng trống giới tính
+    public static String deleteWrite(String name) {
+        System.out.println(name);
+        String newName = scanner.nextLine();
+        return newName.replaceAll("\\s+", "").trim();
 
+    }
 
 }
