@@ -23,10 +23,10 @@ public class StudentManagement {
                     break;
                 case 2:
 
-                    String newName = deleteWrite("nhập tên học viên");
-                    while (newName.length() == 0){
+                    String newName =validateName("nhập tên học viên");
+                    while (newName.length() == 0) {
                         System.out.println("yêu cầu nhập tên");
-                        newName =deleteWrite("nhập tên học viên(bắt buộc)");
+                        newName = deleteWrite("nhập tên học viên(bắt buộc)");
                     }
 
                     String newSex = removeWrite("nhập giới tính");
@@ -43,7 +43,7 @@ public class StudentManagement {
                     StudentManagement.addStudent(newName, newSex, newAge);
                     break;
                 case 3:
-                    StudentManagement.InformationStudent();
+                    StudentManagement.informationStudent();
                     break;
                 case 4:
                     StudentManagement.RemoveStudent();
@@ -145,7 +145,7 @@ public class StudentManagement {
         return null;
     }
 
-    public static void InformationStudent() {
+    public static void informationStudent() {
         System.out.println("nhập id học viên muốn sửa: ");
         try {
             int idRepair = Integer.parseInt(scanner.nextLine());
@@ -156,15 +156,15 @@ public class StudentManagement {
             } else {
 
 
-                String newName = deleteWrite("nhập tên");
-                while (newName.length() == 0){
+                String newName = validateName("nhập tên");
+                while (newName.length() == 0) {
                     System.out.println("yêu cầu nhập tên");
-                    newName =deleteWrite("nhập tên");
+                    newName = deleteWrite("nhập tên");
                 }
-                     student.setName(newName);
-                System.out.println("nhập giới tính");
-                String newSex = scanner.nextLine();
-                while (newSex.length() == 0  || newSex != null){
+                student.setName(newName);
+
+                String newSex = removeWrite("nhập giới tính");
+                while (newSex.length() == 0 || newSex != null) {
                     if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
                         break;
                     System.out.println("bạn nhập sai giới tính:");
@@ -182,7 +182,7 @@ public class StudentManagement {
                 saveProductToFile();
             }
         } catch (Exception e) {
-            System.out.println("bạn không nhập id");
+            informationStudent();
         }
 
 
@@ -202,8 +202,8 @@ public class StudentManagement {
 
 
             saveProductToFile();
-        }catch (Exception e){
-            System.out.println("bạn chưa nhập id");
+        } catch (Exception e) {
+            RemoveStudent();
         }
 
     }
@@ -255,8 +255,8 @@ public class StudentManagement {
             }
             student.setPointMedium(student.getPointMedium());
             saveProductToFile();
-        }catch (Exception e){
-            System.out.println("bạn chưa nhập id");
+        } catch (Exception e) {
+            inputScore();
         }
 
     }
@@ -309,8 +309,8 @@ public class StudentManagement {
             }
             student.setPointMedium(student.getPointMedium());
             saveProductToFile();
-        }catch (Exception e){
-            System.out.println("bạn chưa nhập id");
+        } catch (Exception e) {
+            repairScore();
         }
 
     }
@@ -386,4 +386,48 @@ public class StudentManagement {
         return newName.replaceAll("\\s+", "").trim();
 
     }
+
+    private static String validateName(String mess) {
+        System.out.println(mess);
+        try {
+            String name = scanner.nextLine();
+            name = name.toLowerCase();
+            name = name.trim();
+            ArrayList<String> arr = new ArrayList<>();
+            for (int i = 0; i < name.length(); i++) {
+                if (name.split("")[i].matches("[\\d]")) {
+                    throw new Exception();
+                } else {
+                    arr.add(name.split("")[i]);
+                }
+            }
+            // Del space
+            String str = arr.get(0).toUpperCase();
+            arr.remove(0);
+            arr.add(0, str);
+            for (int i = 0; i < arr.size() - 1; i++) {
+                if (arr.get(i).equals(" ") && arr.get(i + 1).equals(" ")) {
+                    arr.remove(i + 1);
+                    i--;
+                }
+                if (arr.get(i).equals(" ") && !arr.get(i + 1).equals(" ")) {
+                    String result = arr.get(i + 1).toUpperCase();
+                    arr.remove(i + 1);
+                    arr.add(i + 1, result);
+                }
+            }
+            StringBuilder listString = new StringBuilder();
+            for (String s : arr) {
+                listString.append(s);
+            }
+            if (listString.toString().length() > 25)
+                throw new Exception();
+            return listString.toString();
+        } catch (Exception e) {
+            System.err.println("Trong tên không được có số hoặc quá dài và không để trống");
+            return validateName(mess);
+        }
+    }
+
+
 }
