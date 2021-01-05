@@ -1,5 +1,6 @@
 import java.io.*;
 
+
 public class StudentFile {
 
     public static void writeProductToFile(Object object, String fileName) throws IOException {

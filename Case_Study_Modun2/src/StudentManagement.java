@@ -1,9 +1,17 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
 public class StudentManagement {
+    static Gson gson = new Gson();
     private static final Scanner scanner = new Scanner(System.in);
     static ArrayList<Student> tempList = new ArrayList<>();
     public static ArrayList<Student> studentList = new ArrayList<>();
@@ -25,36 +33,51 @@ public class StudentManagement {
         }
         return null;
     }
+//    lưu file cũ
+    //    static {
+//        try {
+//            Object studentFile = StudentFile.readProductToFile("student.data");
+//            if (studentFile == null) {
+//                studentList = new ArrayList<>();
+//            } else {
+//                studentList = (ArrayList<Student>) studentFile;
+//            }
+//            int maxId = 0;
+//            for (Student student : studentList) {
+//                int currentId = student.getId();
+//                if (currentId > maxId)
+//                    maxId = currentId;
+//            }
+//            id = maxId;
+//        } catch (IOException | ClassNotFoundException e) {
+//            studentList = new ArrayList<>();
+//            id = 0;
+//        }
+//    } s s
     static {
-        try {
-            Object studentFile = StudentFile.readProductToFile("student.data");
-            if (studentFile == null) {
-                studentList = new ArrayList<>();
-            } else {
-                studentList = (ArrayList<Student>) studentFile;
-            }
-            int maxId = 0;
+    try (Reader reader = new FileReader("students.json")){
+        Type classOfT = new TypeToken<ArrayList<Student>>(){}.getType();
+        studentList = gson.fromJson(reader, classOfT);
+        int maxId = 0;
             for (Student student : studentList) {
                 int currentId = student.getId();
                 if (currentId > maxId)
                     maxId = currentId;
             }
             id = maxId;
-        } catch (IOException | ClassNotFoundException e) {
+    } catch (IOException e) {
             studentList = new ArrayList<>();
             id = 0;
-        }
     }
-//    lưu file
-    public static void saveProductToFile() throws IOException {
-        StudentFile.writeProductToFile(studentList, "student.data");
-    }
+}
+
 
     //    thêm học viên
     public static void addStudent(String name, String sex, String age) throws IOException {
         studentList.add(new Student(++id, name, sex, age));
         size++;
-        saveProductToFile();
+//
+        saveToFile();
     }
     //sửa thông tin học viên
     public static void informationStudent() {
@@ -110,7 +133,7 @@ public class StudentManagement {
                         }
                     }
                     tempList.clear();
-                    saveProductToFile();
+                   saveToFile();
                 }
             } catch (Exception e) {
                 informationStudent();
@@ -138,7 +161,7 @@ public class StudentManagement {
                 studentList.remove(student);
                 System.out.println("đối tượng bị loại bỏ");
                 tempList.clear();
-                saveProductToFile();
+                saveToFile();
             } catch (Exception e) {
                 RemoveStudent();
             }
@@ -204,7 +227,7 @@ public class StudentManagement {
                     }
                     student.setPointMedium(student.getPointMedium());
                     tempList.clear();
-                    saveProductToFile();
+                 saveToFile();
                 } catch (Exception e) {
                     inputScore();
                 }
@@ -245,7 +268,7 @@ public class StudentManagement {
 
                     student.setPointMedium(student.getPointMedium());
                     tempList.clear();
-                    saveProductToFile();
+                   saveToFile();
                 } catch (Exception e) {
                     inputScore();
                 }
@@ -261,7 +284,7 @@ public class StudentManagement {
                             student.setPoint1(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                            saveToFile();
                         } else {
                             System.out.println("diem da duoc nhap");
                         }
@@ -277,7 +300,7 @@ public class StudentManagement {
                             student.setPoint2(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                          saveToFile();
                         } else {
                             System.out.println("diem da duoc nhap");
                         }
@@ -293,7 +316,7 @@ public class StudentManagement {
                             student.setPoint3(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                            saveToFile();
                         } else {
                             System.out.println("diem da duoc nhap");
                         }
@@ -309,7 +332,7 @@ public class StudentManagement {
                             student.setPoint4(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                           saveToFile();
                         } else {
                             System.out.println("diem da duoc nhap");
                         }
@@ -388,7 +411,7 @@ public class StudentManagement {
                     }
                     student.setPointMedium(student.getPointMedium());
                     tempList.clear();
-                    saveProductToFile();
+                   saveToFile();
                 } catch (Exception e) {
                     repairScore();
                 }
@@ -427,7 +450,7 @@ public class StudentManagement {
 
                     student.setPointMedium(student.getPointMedium());
                     tempList.clear();
-                    saveProductToFile();
+                 saveToFile();
                 } catch (Exception e) {
                     inputScore();
                 }
@@ -442,7 +465,7 @@ public class StudentManagement {
                             student.setPoint1(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                            saveToFile();
                         } else {
                             System.out.println("điểm đã được nhập");
                         }
@@ -457,7 +480,7 @@ public class StudentManagement {
                             student.setPoint2(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                         saveToFile();
                         } else {
                             System.out.println("điểm đã được nhập");
                         }
@@ -473,7 +496,7 @@ public class StudentManagement {
                             student.setPoint3(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                           saveToFile();
                         } else {
                             System.out.println("điểm đã được nhập");
                         }
@@ -488,7 +511,7 @@ public class StudentManagement {
                             student.setPoint4(ss);
                             student.setPointMedium(student.getPointMedium());
                             tempList.clear();
-                            saveProductToFile();
+                           saveToFile();
                         } else {
                             System.out.println("điểm đã được nhập");
                         }
@@ -517,6 +540,14 @@ public class StudentManagement {
 
         ShowStudent.showStudent(studentList);
 
+    }
+    //    lưu file
+    public static void saveToFile(){
+        try(FileWriter fileWriter = new FileWriter("students.json")){
+            gson.toJson(studentList, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
