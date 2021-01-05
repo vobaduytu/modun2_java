@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Student implements Serializable {
@@ -6,7 +7,7 @@ public class Student implements Serializable {
     public int id;
     public String name;
     public String sex;
-    public int age;
+    public String birthday;
     public double point1;
     public double point2;
     public double point3;
@@ -26,11 +27,11 @@ public class Student implements Serializable {
 
     public double pointMedium;
 
-    public Student(int id,String name, String sex, int age) {
+    public Student(int id,String name, String sex, String birthday) {
         this.id=id;
         this.name = name;
         this.sex = sex;
-        this.age = age;
+        this.birthday = birthday;
     }
 
     public Student(double point1, double point2, double point3, double point4, double pointMedium) {
@@ -49,12 +50,12 @@ public class Student implements Serializable {
         this.sex = sex;
     }
 
-    public int getAge() {
-        return age;
+    public String getAge() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAge(String age) {
+        this.birthday = age;
     }
 
     public String getName() {
@@ -98,7 +99,8 @@ public class Student implements Serializable {
     }
 
     public double getPointMedium() {
-        return (point1 + point2 + point3 + point4) / 4;
+
+        return (point1 + point2 + point3*2 + point4*3) / 7;
     }
 
     public void setPointMedium(double pointMedium) {
@@ -111,7 +113,7 @@ public class Student implements Serializable {
 
                 " name =" + name +
                         " sex =" + sex +
-                        " age =" + age +
+                        " birthday =" + birthday +
                         " point1 =" + point1 +
                         " point2 =" + point2 +
                         " point3 =" + point3 +
