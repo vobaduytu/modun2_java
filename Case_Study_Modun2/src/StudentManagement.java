@@ -73,17 +73,45 @@ public class StudentManagement {
             searchName(nameRepair);
             if (tempList.size() == 0) {
                 System.out.println("tên không tồn tại");
-                tempList.clear();
+                System.out.println("1.nhập lại");
+                System.out.println("2.về menu");
+                int chon6 = Validate.validateChon("nhập lựa chọn");
+
+                if (chon6 == 1) {
+                    informationStudent();
+                } else {
+                    Menu.main();
+                }
             } else {
                 ShowStudent.showStudent(tempList);
 
                 try {
-                    int idRepair = Validate.validateID("nhập id học viên muốn sửa");
-                    Student student = getStudentById(idRepair);
-                    if (student == null) {
-                        System.out.println("không tìm thấy tên");
-                        tempList.clear();
-                    } else {
+                    boolean check = true;
+                    Student student = null;
+                    while (check) {
+                        check = false;
+                        int idRepair = Validate.validateID("nhập id học viên muốn sửa");
+                        student = getStudentById(idRepair);
+                        if (student == null) {
+                            System.out.println("không tìm thấy học viên");
+                            System.out.println("1.quay lại");
+                            System.out.println("2.về menu");
+                            System.out.println("3.nhập lại id");
+                            int chon7 = Validate.validateChon("nhập lựa chọn");
+                            if (chon7 == 2) {
+                                tempList = new ArrayList<>();
+                                Menu.main();
+                            }
+                            if (chon7 == 1) {
+                                tempList = new ArrayList<>();
+                                informationStudent();
+                            }
+                            if (chon7 == 3) {
+                                check = true;
+                            }
+                        }
+                    }
+                    if (student != null) {
                         System.out.println("1.sửa tên");
                         System.out.println("2.sửa giới tính");
                         System.out.println("3.sửa ngày sinh");
@@ -97,9 +125,10 @@ public class StudentManagement {
                                 newName = Validate.validateName("nhập tên");
                             }
                             student.setName(newName);
+                            tempList.clear();
                             informationStudent();
                         }
-                        tempList.clear();
+
                         if (chon == 2) {
                             String newSex = Validate.deleteWrite("nhập giới tính");
                             while (newSex.length() == 0 || newSex != null) {
@@ -111,11 +140,14 @@ public class StudentManagement {
                             }
                             student.setSex(newSex);
                             tempList.clear();
+                            informationStudent();
                         }
                         if (chon == 3) {
                             try {
                                 String newAge = Validate.age("nhập ngày sinh");
                                 student.setAge(newAge);
+                                tempList.clear();
+                                informationStudent();
                             } catch (Exception e) {
                                 System.out.println("bạn đã không sửa ngày sinh");
                             }
@@ -139,13 +171,21 @@ public class StudentManagement {
     }
 
     //xóa học viên
-    public static void RemoveStudent() throws IOException {
+    public static void removeStudent() throws IOException {
 
         String nameRepair = Validate.validateName("nhập tên học viên muốn xóa");
         searchName(nameRepair);
         if (tempList.size() == 0) {
             System.out.println("tên không tồn tại");
-            tempList.clear();
+            System.out.println("1.nhập lại");
+            System.out.println("2.về menu");
+            int chon6 = Validate.validateChon("nhập lựa chọn");
+
+            if (chon6 == 1) {
+                removeStudent();
+            } else {
+                Menu.main();
+            }
         } else {
             ShowStudent.showStudent(tempList);
             System.out.println("1.về menu");
@@ -166,23 +206,43 @@ public class StudentManagement {
             }
             if (chon4 == 3) {
                 try {
-                    int idRepair = Validate.validateID("3.nhập id học viên muốn xóa");
-                    Student student = getStudentById(idRepair);
-                    if (student == null) {
-                        System.out.println("không tìm thấy học viên");
-                        tempList.clear();
-                        return;
+                    boolean check = true;
+                    Student student = null;
+                    while (check) {
+                        check = false;
+                        int idRepair = Validate.validateID("nhập id học viên muốn xóa");
+                        student = getStudentById(idRepair);
+                        if (student == null) {
+                            System.out.println("không tìm thấy học viên");
+                            System.out.println("1.quay lại");
+                            System.out.println("2.về menu");
+                            System.out.println("3.nhập lại id");
+                            int chon7 = Validate.validateChon("nhập lựa chọn");
+                            if (chon7 == 2) {
+                                tempList = new ArrayList<>();
+                                Menu.main();
+                            }
+                            if (chon7 == 1) {
+                                tempList = new ArrayList<>();
+                                removeStudent();
+                            }
+                            if (chon7 == 3) {
+                                check = true;
+                            }
+
+                        }
                     }
                     studentList.remove(student);
                     System.out.println("đối tượng bị loại bỏ");
                     tempList.clear();
                     saveToFile();
                 } catch (Exception e) {
-                    RemoveStudent();
+                    removeStudent();
                 }
             }
         }
     }
+
 
     //thêm điểm
     public static void inputScore() throws IOException {

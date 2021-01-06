@@ -48,7 +48,7 @@ public class Menu {
                         StudentManagement.informationStudent();
                         break;
                     case 4:
-                        StudentManagement.RemoveStudent();
+                        StudentManagement.removeStudent();
                         break;
                     case 5:
                         StudentManagement.inputScore();
