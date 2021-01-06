@@ -18,6 +18,10 @@ public class Student implements Serializable {
     public boolean statusPont3 = false;
     public boolean statusPont4 = false;
 
+    public Student() {
+
+    }
+
     public int getId() {
         return id;
     }

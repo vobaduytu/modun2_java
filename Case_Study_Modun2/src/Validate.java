@@ -1,5 +1,7 @@
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -47,6 +49,7 @@ public class Validate {
     // ngày sinh
     public static String age(String meseage) {
         System.out.println(meseage);
+        System.out.println("ngày/tháng/năm");
         while (true) {
             try {
                 String date = scanner.nextLine();
@@ -62,7 +65,7 @@ public class Validate {
     private static void checkYear(String date) throws Exception {
         String[] a = date.split("/");
         int year = Integer.parseInt(a[2]);
-        if ( year <= 1930 || year >= 2020)
+        if (year <= 1930 || year >= 2021)
             throw new Exception("nam sinh khong hop le");
     }
 
@@ -110,30 +113,35 @@ public class Validate {
             return point(meesage);
         }
     }
-//    id
-    public static int validateID(String meesage){
+
+    //    id
+    public static int validateID(String meesage) {
         System.out.println(meesage);
         try {
             return Integer.parseInt(scanner.nextLine());
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(" phải là một số");
             return validateID(meesage);
         }
 
     }
-    public static int validateChon(String meesage){
+
+    //    lựa chọn
+    public static int validateChon(String meesage) {
         System.out.println(meesage);
         try {
             int num = Integer.parseInt(scanner.nextLine());
             if (num > 4 || num < 0) {
-                System.out.println("điểm phải trong khoảng 0 --> 4");
+                System.out.println("lựa chọn phải trong khoảng giới hạn đưa ra");
                 return validateChon(meesage);
             }
             return num;
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(" phải là một số");
             return validateChon(meesage);
         }
 
     }
+
+
 }

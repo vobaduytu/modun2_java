@@ -36,6 +36,7 @@ public class StudentManagement {
         return null;
     }
 
+    //lưu file + id tự tăng
     static {
         try (Reader reader = new FileReader("students.json")) {
             Type classOfT = new TypeToken<ArrayList<Student>>() {
@@ -67,7 +68,7 @@ public class StudentManagement {
         System.out.println("1.nhập tên học viên muốn sửa");
         System.out.println("2.về Menu");
         int chon5 = Validate.validateID("lựa chọn của bạn");
-        if (chon5==1){
+        if (chon5 == 1) {
             String nameRepair = Validate.validateName("nhập tên học viên muốn sửa");
             searchName(nameRepair);
             if (tempList.size() == 0) {
@@ -131,7 +132,7 @@ public class StudentManagement {
                 }
             }
         }
-        if (chon5==2){
+        if (chon5 == 2) {
             Menu.main();
         }
 
@@ -189,8 +190,16 @@ public class StudentManagement {
             String nameRepair = Validate.validateName("nhập tên học viên muốn thêm điểm");
             searchName(nameRepair);
             if (tempList.size() == 0) {
-                System.out.println("ten khong ton tai");
-                tempList.clear();
+                System.out.println("tên không tồn tại");
+                System.out.println("1.nhập lại");
+                System.out.println("2.về menu");
+                int chon6 = Validate.validateChon("nhập lựa chọn");
+
+                if (chon6 == 1) {
+                    inputScore();
+                } else {
+                    Menu.main();
+                }
             } else {
                 ShowStudent.showStudent(tempList);
                 System.out.println("1.nhập điểm 1 cột");
@@ -202,13 +211,33 @@ public class StudentManagement {
                 if (chon2 == 1) {
 
                     try {
-                        int idRepair = Validate.validateID("nhập id học viên muốn thêm điểm");
-                        Student student = getStudentById(idRepair);
-                        if (student == null) {
-                            System.out.println("không tìm thấy học viên");
-                            tempList = new ArrayList<>();
-                            return;
+                        boolean check = true;
+                        Student student = null;
+                        while (check) {
+                            check = false;
+                            int idRepair = Validate.validateID("nhập id học viên muốn thêm điểm");
+                            student = getStudentById(idRepair);
+                            if (student == null) {
+                                System.out.println("không tìm thấy học viên");
+                                System.out.println("1.quay lại");
+                                System.out.println("2.về menu");
+                                System.out.println("3.nhập lại id");
+                                int chon7 = Validate.validateChon("nhập lựa chọn");
+                                if (chon7 == 2) {
+                                    tempList = new ArrayList<>();
+                                    Menu.main();
+                                }
+                                if (chon7 == 1) {
+                                    tempList = new ArrayList<>();
+                                    inputScore();
+                                }
+                                if (chon7 == 3) {
+                                    check = true;
+                                }
+
+                            }
                         }
+
                         int point = Validate.choie("nhập ô điểm");
                         if (point == 1) {
                             if (!student.statusPont1) {
@@ -294,7 +323,7 @@ public class StudentManagement {
                     if (point == 1) {
                         for (Student student : tempList) {
                             if (!student.statusPont1) {
-                                System.out.println("nhap diem cua " + student.getName());
+                                System.out.println("nhập điểm của " + student.getName());
                                 int ss = Validate.point("nhập điểm");
                                 student.statusPont1 = true;
                                 student.setPoint1(ss);
@@ -302,7 +331,7 @@ public class StudentManagement {
 
                                 saveToFile();
                             } else {
-                                System.out.println("diem da duoc nhap");
+                                System.out.println("điểm đã được nhập");
                             }
                         }
                         tempList.clear();
@@ -311,7 +340,7 @@ public class StudentManagement {
                     if (point == 2) {
                         for (Student student : tempList) {
                             if (!student.statusPont2) {
-                                System.out.println("nhap diem cua " + student.getName());
+                                System.out.println("nhập điểm của " + student.getName());
                                 int ss = Validate.point("nhập điểm");
                                 student.statusPont2 = true;
                                 student.setPoint2(ss);
@@ -319,7 +348,7 @@ public class StudentManagement {
 
                                 saveToFile();
                             } else {
-                                System.out.println("diem da duoc nhap");
+                                System.out.println("điểm đã được nhập");
                             }
                         }
                         tempList.clear();
@@ -328,14 +357,14 @@ public class StudentManagement {
                     if (point == 3) {
                         for (Student student : tempList) {
                             if (!student.statusPont3) {
-                                System.out.println("nhap diem cua " + student.getName());
+                                System.out.println("nhập điểm của " + student.getName());
                                 int ss = Validate.point("nhập điểm");
                                 student.statusPont3 = true;
                                 student.setPoint3(ss);
                                 student.setPointMedium(student.getPointMedium());
                                 saveToFile();
                             } else {
-                                System.out.println("diem da duoc nhap");
+                                System.out.println("điểm đã được nhập");
                             }
                         }
                         tempList.clear();
@@ -343,7 +372,7 @@ public class StudentManagement {
                     if (point == 4) {
                         for (Student student : tempList) {
                             if (!student.statusPont4) {
-                                System.out.println("nhap diem cua " + student.getName());
+                                System.out.println("nhập điểm của " + student.getName());
                                 int ss = Validate.point("nhập điểm");
                                 student.statusPont4 = true;
                                 student.setPoint4(ss);
@@ -351,7 +380,7 @@ public class StudentManagement {
 
                                 saveToFile();
                             } else {
-                                System.out.println("diem da duoc nhap");
+                                System.out.println("điểm đã được nhập");
                             }
                         }
                         tempList.clear();
@@ -377,208 +406,239 @@ public class StudentManagement {
 
     //sửa điểm
     public static void repairScore() throws IOException {
-try {
-    String nameRepair = Validate.validateName("nhập tên học viên muốn sửa điểm");
-    searchName(nameRepair);
-    if (tempList.size() == 0) {
-        System.out.println("tên không tồn tại");
-    } else {
-        ShowStudent.showStudent(tempList);
-        System.out.println("1.sửa điểm 1 cột");
-        System.out.println("2.sửa tất cả điểm của một học viên");
-        System.out.println("3.sửa điểm theo cột của tất cả học viên");
-        System.out.println("4.về menu");
+        try {
+            String nameRepair = Validate.validateName("nhập tên học viên muốn sửa điểm");
+            searchName(nameRepair);
+            if (tempList.size() == 0) {
+                System.out.println("tên không tồn tại");
+                System.out.println("1.nhập lại");
+                System.out.println("2.về menu");
+                int chon6 = Validate.validateChon("nhập lựa chọn");
 
-        int chon2 = Validate.validateChon("nhập lựa chọn");
-        if (chon2 == 1) {
-
-            try {
-                int idRepair = Validate.validateID("nhập id học viên muốn sửa");
-                Student student = getStudentById(idRepair);
-                if (student == null) {
-                    tempList.clear();
-                    System.out.println("không tìm thấy học viên");
-
-                    return;
-                }
-                int point = Validate.choie("nhập ô điểm");
-                if (point == 1) {
-                    if (student.statusPont1) {
-                        int p1 = Validate.point("nhập điểm");
-
-                        student.setPoint1(p1);
-                    } else System.out.println("điểm chưa được nhập");
-                }
-                if (point == 2) {
-                    if (student.statusPont2) {
-
-                        int p2 = Validate.point("nhập điểm");
-
-                        student.setPoint2(p2);
-                    } else System.out.println("điểm chưa được nhập");
-                }
-                if (point == 3) {
-                    if (student.statusPont3) {
-
-                        int p3 = Validate.point("nhập điểm");
-
-                        student.setPoint3(p3);
-                    } else System.out.println("điểm chưa được nhập");
-                }
-                if (point == 4) {
-                    if (student.statusPont4) {
-
-                        int p4 = Validate.point("nhập điểm");
-
-                        student.setPoint4(p4);
-                    } else System.out.println("điểm chưa được nhập");
-                }
-                if (point == 5) {
+                if (chon6 == 1) {
+                    repairScore();
+                } else {
                     Menu.main();
                 }
-                student.setPointMedium(student.getPointMedium());
-                tempList.clear();
-                saveToFile();
-            } catch (Exception e) {
-                repairScore();
-            }
-        }
-        if (chon2 == 2) {
+            } else {
+                ShowStudent.showStudent(tempList);
+                System.out.println("1.sửa điểm 1 cột");
+                System.out.println("2.sửa tất cả điểm của một học viên");
+                System.out.println("3.sửa điểm theo cột của tất cả học viên");
+                System.out.println("4.về menu");
 
-            try {
-                int idRepair = Validate.validateID("nhập id học viên muốn sửa");
-                Student student = getStudentById(idRepair);
-                if (student == null) {
-                    System.out.println("không tìm thấy học viên");
+                int chon2 = Validate.validateChon("nhập lựa chọn");
+                if (chon2 == 1) {
+
+                    try {
+                        boolean check = true;
+                        Student student = null;
+                        while (check) {
+                            check = false;
+                            int idRepair = Validate.validateID("nhập id học viên muốn sửa điểm");
+                            student = getStudentById(idRepair);
+                            if (student == null) {
+                                System.out.println("không tìm thấy học viên");
+                                System.out.println("1.quay lại");
+                                System.out.println("2.về menu");
+                                System.out.println("3.nhập lại id");
+                                int chon7 = Validate.validateChon("nhập lựa chọn");
+                                if (chon7 == 2) {
+                                    tempList = new ArrayList<>();
+                                    Menu.main();
+                                }
+                                if (chon7 == 1) {
+                                    tempList = new ArrayList<>();
+                                    repairScore();
+                                }
+                                if (chon7 == 3) {
+                                    check = true;
+                                }
+
+                            }
+                        }
+
+                        int point = Validate.choie("nhập ô điểm");
+                        if (point == 1) {
+                            if (student.statusPont1) {
+                                int p1 = Validate.point("nhập điểm");
+
+                                student.setPoint1(p1);
+                            } else System.out.println("điểm chưa được nhập");
+                        }
+                        if (point == 2) {
+                            if (student.statusPont2) {
+
+                                int p2 = Validate.point("nhập điểm");
+
+                                student.setPoint2(p2);
+                            } else System.out.println("điểm chưa được nhập");
+                        }
+                        if (point == 3) {
+                            if (student.statusPont3) {
+
+                                int p3 = Validate.point("nhập điểm");
+
+                                student.setPoint3(p3);
+                            } else System.out.println("điểm chưa được nhập");
+                        }
+                        if (point == 4) {
+                            if (student.statusPont4) {
+                                int p4 = Validate.point("nhập điểm");
+                                student.setPoint4(p4);
+                            } else System.out.println("điểm chưa được nhập");
+                        }
+                        if (point == 5) {
+                            Menu.main();
+                        }
+                        student.setPointMedium(student.getPointMedium());
+                        tempList.clear();
+                        saveToFile();
+                    } catch (Exception e) {
+                        repairScore();
+                    }
+                }
+                if (chon2 == 2) {
+
+                    try {
+                        int idRepair = Validate.validateID("nhập id học viên muốn sửa");
+                        Student student = getStudentById(idRepair);
+                        if (student == null) {
+                            System.out.println("không tìm thấy học viên");
+                            tempList.clear();
+                            return;
+                        }
+                        if (student.statusPont1) {
+                            int p1 = Validate.point("nhập điểm");
+                            student.setPoint1(p1);
+                        } else System.out.println("điểm chưa được nhập");
+
+                        if (student.statusPont2) {
+                            int p2 = Validate.point("nhập điểm");
+
+                            student.setPoint2(p2);
+                        } else System.out.println("điểm chưa được nhập");
+                        if (student.statusPont3) {
+                            int p3 = Validate.point("nhập điểm");
+
+                            student.setPoint3(p3);
+                        } else System.out.println("điểm chưa được nhập");
+
+                        if (student.statusPont4) {
+                            int p4 = Validate.point("nhập điểm");
+
+                            student.setPoint4(p4);
+                        } else System.out.println("điểm chưa được nhập");
+
+                        student.setPointMedium(student.getPointMedium());
+                        tempList.clear();
+                        saveToFile();
+                    } catch (Exception e) {
+                        inputScore();
+                    }
+                }
+                if (chon2 == 3) {
+                    int point = Validate.choie("nhập ô điểm");
+                    if (point == 1) {
+                        for (Student student : tempList) {
+                            if (student.statusPont1) {
+                                System.out.println("sửa điểm của " + student.getName());
+                                int ss = Validate.point("nhập điểm");
+                                student.setPoint1(ss);
+                                student.setPointMedium(student.getPointMedium());
+
+                                saveToFile();
+                            } else {
+                                System.out.println("điểm chưa được nhập");
+                            }
+                        }
+                        tempList.clear();
+
+                    }
+
+                    if (point == 2) {
+                        for (Student student : tempList) {
+                            if (student.statusPont2) {
+                                System.out.println("sửa điểm của" + student.getName());
+                                int ss = Validate.point("nhập điểm");
+                                student.setPoint2(ss);
+                                student.setPointMedium(student.getPointMedium());
+
+                                saveToFile();
+                            } else {
+                                System.out.println("điểm chưa được nhập");
+                            }
+                        }
+                        tempList.clear();
+                    }
+
+                    if (point == 3) {
+                        for (Student student : tempList) {
+                            if (student.statusPont3) {
+                                System.out.println("sửa điểm của " + student.getName());
+                                int ss = Validate.point("nhập điểm");
+
+                                student.setPoint3(ss);
+                                student.setPointMedium(student.getPointMedium());
+
+                                saveToFile();
+                            } else {
+                                System.out.println("điểm chưa được nhập");
+                            }
+                        }
+                        tempList.clear();
+                    }
+
+                    if (point == 4) {
+                        for (Student student : tempList) {
+                            if (student.statusPont4) {
+                                System.out.println("sửa điểm của " + student.getName());
+                                int ss = Validate.point("nhập điểm");
+                                student.setPoint4(ss);
+                                student.setPointMedium(student.getPointMedium());
+
+                                saveToFile();
+                            } else {
+                                System.out.println("điểm chưa được nhập");
+                            }
+                        }
+                        tempList.clear();
+                    }
+
+                    if (point == 5) {
+                        {
+                            repairScore();
+                        }
+                    }
+                }
+                if (chon2 == 4) {
                     tempList.clear();
-                    return;
-                }
-                if (student.statusPont1) {
-                    int p1 = Validate.point("nhập điểm");
-                    student.setPoint1(p1);
-                } else System.out.println("điểm chưa được nhập");
-
-                if (student.statusPont2) {
-                    int p2 = Validate.point("nhập điểm");
-
-                    student.setPoint2(p2);
-                } else System.out.println("điểm chưa được nhập");
-                if (student.statusPont3) {
-                    int p3 = Validate.point("nhập điểm");
-
-                    student.setPoint3(p3);
-                } else System.out.println("điểm chưa được nhập");
-
-                if (student.statusPont4) {
-                    int p4 = Validate.point("nhập điểm");
-
-                    student.setPoint4(p4);
-                } else System.out.println("điểm chưa được nhập");
-
-                student.setPointMedium(student.getPointMedium());
-                tempList.clear();
-                saveToFile();
-            } catch (Exception e) {
-                inputScore();
-            }
-        }
-        if (chon2 == 3) {
-            int point = Validate.choie("nhập ô điểm");
-            if (point == 1) {
-                for (Student student : tempList) {
-                    if (student.statusPont1) {
-                        System.out.println("sửa điểm của " + student.getName());
-                        int ss = Validate.point("nhập điểm");
-                        student.setPoint1(ss);
-                        student.setPointMedium(student.getPointMedium());
-
-                        saveToFile();
-                    } else {
-                        System.out.println("điểm chưa được nhập");
-                    }
-                }
-                tempList.clear();
-
-            }
-
-            if (point == 2) {
-                for (Student student : tempList) {
-                    if (student.statusPont2) {
-                        System.out.println("sửa điểm của" + student.getName());
-                        int ss = Validate.point("nhập điểm");
-                        student.setPoint2(ss);
-                        student.setPointMedium(student.getPointMedium());
-
-                        saveToFile();
-                    } else {
-                        System.out.println("điểm chưa được nhập");
-                    }
-                }
-                tempList.clear();
-            }
-
-            if (point == 3) {
-                for (Student student : tempList) {
-                    if (student.statusPont3) {
-                        System.out.println("sửa điểm của " + student.getName());
-                        int ss = Validate.point("nhập điểm");
-
-                        student.setPoint3(ss);
-                        student.setPointMedium(student.getPointMedium());
-
-                        saveToFile();
-                    } else {
-                        System.out.println("điểm chưa được nhập");
-                    }
-                }
-                tempList.clear();
-            }
-
-            if (point == 4) {
-                for (Student student : tempList) {
-                    if (student.statusPont4) {
-                        System.out.println("sửa điểm của " + student.getName());
-                        int ss = Validate.point("nhập điểm");
-                        student.setPoint4(ss);
-                        student.setPointMedium(student.getPointMedium());
-
-                        saveToFile();
-                    } else {
-                        System.out.println("điểm chưa được nhập");
-                    }
-                }
-                tempList.clear();
-            }
-
-            if (point == 5) {
-                {
-                   repairScore();
+                    Menu.main();
                 }
             }
-        }if (chon2 == 4){
             tempList.clear();
-            Menu.main();
-        }
-    }
-    tempList.clear();
 
-} catch (NumberFormatException | IOException e) {
-    tempList.clear();
-}
+        } catch (NumberFormatException | IOException e) {
+            tempList.clear();
+        }
 
 
     }
 
     // sắp xếp
     public static void sort() {
-
-        studentList.sort(new Comparator<Student>() {
+        for (Student s : studentList) {
+            tempList.add(s);
+        }
+        tempList.sort(new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
                 return o1.getPointMedium() < o2.getPointMedium() ? 1 : -1;
             }
         });
-        ShowStudent.showStudent(studentList);
+
+        ShowStudent.showStudent(tempList);
+        tempList.clear();
 
     }
 
@@ -592,3 +652,4 @@ try {
     }
 
 }
+
