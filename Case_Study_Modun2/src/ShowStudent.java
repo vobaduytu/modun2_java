@@ -43,12 +43,13 @@ public class ShowStudent {
             } else
                 System.out.format("%-15.4s |", student.getPoint4());
 
-            if (student.statusPont1 && student.statusPont2 && student.statusPont3 && student.statusPont4) {
-                System.out.format("%-10.4s |", student.getPointMedium());
-            } else {
+            if (!student.statusPont1 && !student.statusPont2 && !student.statusPont3 && !student.statusPont4) {
                 String s = String.valueOf(student.getPointMedium());
                 s = "";
                 System.out.format("%-10.4s |", s);
+
+            } else {
+                System.out.format("%-10.4s |", student.getPointMedium());
             }
 
             System.out.format("\n");

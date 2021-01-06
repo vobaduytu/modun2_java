@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -7,50 +8,64 @@ public class Validate {
 
     static {
         formatter.setLenient(false);
+
     }
 
     private static final Scanner scanner = new Scanner(System.in);
-    static Pattern namePattern = Pattern.compile("^[a-zA-Z ]{1,40}$");
-//hiển thị tên
-static String validateName(String mess) {
-    System.out.println(mess);
-    try {
-        String name = scanner.nextLine().trim().replaceAll("\\s+", " ");
-        if (!namePattern.matcher(name).matches())
-            throw new Exception("invalid name");
-        String[] word = name.split(" ");
-        StringBuilder result = new StringBuilder();
-        for (String s : word) {
-            result.append(s.substring(0, 1).toUpperCase()).append(s.substring(1)).append(" ");
+    static Pattern namePattern = Pattern.compile("^[\\pL\\pZ]{0,40}$");
+
+    //hiển thị tên
+    static String validateName(String mess) {
+        System.out.println(mess);
+        try {
+            String name = scanner.nextLine().trim().replaceAll("\\s+", " ");
+            if (!namePattern.matcher(name).matches())
+                throw new Exception("invalid name");
+            String[] word = name.split(" ");
+            StringBuilder result = new StringBuilder();
+            for (String s : word) {
+                result.append(s.substring(0, 1).toUpperCase()).append(s.substring(1)).append(" ");
+            }
+
+            return result.toString().trim();
+
+        } catch (Exception e) {
+            System.err.println("Trong tên phải là kí tự chữ và không quá dài");
+            return validateName(mess);
         }
-
-        return result.toString().trim();
-
-    } catch (Exception e) {
-        System.err.println("Trong tên phải là kí tự chữ và không quá dài");
-        return validateName(mess);
     }
-}
+
     // xóa khoảng trống giới tính
     public static String removeWrite(String name) {
         System.out.println(name);
+
         String newName = scanner.nextLine();
         return newName.replaceAll("\\s+", "").trim();
 
     }
+
     // ngày sinh
     public static String age(String meseage) {
         System.out.println(meseage);
-        try {
-            String date = scanner.nextLine();
-
-            formatter.parse(date);
-            return date;
-        } catch (Exception e) {
-            System.out.println("sai ngày sinh");
-            return age(meseage);
+        while (true) {
+            try {
+                String date = scanner.nextLine();
+                checkYear(date);
+                formatter.parse(date);
+                return date;
+            } catch (Exception e) {
+                System.out.println("Ngay sinh khong hop le: " + e.getMessage());
+            }
         }
     }
+
+    private static void checkYear(String date) throws Exception {
+        String[] a = date.split("/");
+        int year = Integer.parseInt(a[2]);
+        if ( year <= 1930 || year >= 2020)
+            throw new Exception("nam sinh khong hop le");
+    }
+
     // xóa khoảng trống giới tính
     public static String deleteWrite(String name) {
         System.out.println(name);
@@ -79,7 +94,8 @@ static String validateName(String mess) {
             return choie(me);
         }
     }
-//     điểm
+
+    //     điểm
     public static int point(String meesage) {
         System.out.println(meesage);
         try {

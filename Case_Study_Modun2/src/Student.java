@@ -1,6 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Comparator;
+
 
 public class Student implements Serializable {
     @Serial
@@ -100,8 +100,26 @@ public class Student implements Serializable {
     }
 
     public double getPointMedium() {
+        int count = 0;
+        double total = 0;
+        if(statusPont1){
+            total += this.getPoint1();
+            count += 1;
+        }
+        if(statusPont2){
+            total += this.getPoint2();
+            count += 1;
+        }
+        if(statusPont3){
+            total += this.getPoint3() *2;
+            count += 2;
+        }
+        if(statusPont4){
+            total += this.getPoint4() * 3;
+            count += 3;
+        }
+        return  total / count;
 
-        return (point1 + point2 + point3*2 + point4*3) / 7;
     }
 
     public void setPointMedium(double pointMedium) {
