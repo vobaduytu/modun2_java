@@ -1,4 +1,4 @@
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -81,7 +81,7 @@ public class Validate {
         System.out.println("2: nhập điểm hệ số 1.2");
         System.out.println("3: nhập điểm hệ số 2");
         System.out.println("4: nhập điểm hệ số 3");
-        System.out.println("5: về menu");
+        System.out.println("5: quay lại");
         try {
             int num = Integer.parseInt(scanner.nextLine());
             if (num > 5 || num < 1) {
@@ -109,5 +109,31 @@ public class Validate {
             System.out.println("phải là một số");
             return point(meesage);
         }
+    }
+//    id
+    public static int validateID(String meesage){
+        System.out.println(meesage);
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        }catch (Exception e) {
+            System.out.println(" phải là một số");
+            return validateID(meesage);
+        }
+
+    }
+    public static int validateChon(String meesage){
+        System.out.println(meesage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 4 || num < 0) {
+                System.out.println("điểm phải trong khoảng 0 --> 4");
+                return validateChon(meesage);
+            }
+            return num;
+        }catch (Exception e) {
+            System.out.println(" phải là một số");
+            return validateChon(meesage);
+        }
+
     }
 }

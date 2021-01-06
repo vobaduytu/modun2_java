@@ -32,7 +32,7 @@ public class Menu {
                         }
 
                         String newSex = Validate.removeWrite("nhập giới tính");
-                        while (newSex != null) {
+                        while (true) {
                             if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
                                 break;
                             System.out.println("bạn nhập sai giới tính:");

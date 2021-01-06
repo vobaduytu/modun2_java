@@ -12,7 +12,7 @@ public class ShowStudent {
         System.out.format("%-15s |", "điểm hệ số 3");
         System.out.format("%-10s |", "điểm TB");
         System.out.format("\n");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------");
         for (Student student : studentList) {
             System.out.format("%-3s | ", student.getId());
             System.out.format("%-40s | ", student.getName());
