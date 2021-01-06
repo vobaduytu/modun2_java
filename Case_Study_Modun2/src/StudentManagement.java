@@ -340,13 +340,33 @@ public class StudentManagement {
 
                 if (chon2 == 2) {
 
+
                     try {
-                        int idRepair = Validate.validateID("nhập id học viên muốn thêm điểm");
-                        Student student = getStudentById(idRepair);
-                        if (student == null) {
-                            System.out.println("không tìm thấy học viên");
-                            tempList.clear();
-                            return;
+                        boolean check = true;
+                        Student student = null;
+                        while (check) {
+                            check = false;
+                            int idRepair = Validate.validateID("nhập id học viên muốn thêm điểm");
+                            student = getStudentById(idRepair);
+                            if (student == null) {
+                                System.out.println("không tìm thấy học viên");
+                                System.out.println("1.quay lại");
+                                System.out.println("2.về menu");
+                                System.out.println("3.nhập lại id");
+                                int chon7 = Validate.validateChon("nhập lựa chọn");
+                                if (chon7 == 2) {
+                                    tempList = new ArrayList<>();
+                                    Menu.main();
+                                }
+                                if (chon7 == 1) {
+                                    tempList = new ArrayList<>();
+                                    inputScore();
+                                }
+                                if (chon7 == 3) {
+                                    check = true;
+                                }
+
+                            }
                         }
                         if (!student.statusPont1) {
                             int p1 = Validate.point("nhập điểm");
@@ -489,7 +509,6 @@ public class StudentManagement {
 
                 int chon2 = Validate.validateChon("nhập lựa chọn");
                 if (chon2 == 1) {
-
                     try {
                         boolean check = true;
                         Student student = null;
@@ -561,12 +580,31 @@ public class StudentManagement {
                 if (chon2 == 2) {
 
                     try {
-                        int idRepair = Validate.validateID("nhập id học viên muốn sửa");
-                        Student student = getStudentById(idRepair);
-                        if (student == null) {
-                            System.out.println("không tìm thấy học viên");
-                            tempList.clear();
-                            return;
+                        boolean check = true;
+                        Student student = null;
+                        while (check) {
+                            check = false;
+                            int idRepair = Validate.validateID("nhập id học viên muốn sửa điểm");
+                            student = getStudentById(idRepair);
+                            if (student == null) {
+                                System.out.println("không tìm thấy học viên");
+                                System.out.println("1.quay lại");
+                                System.out.println("2.về menu");
+                                System.out.println("3.nhập lại id");
+                                int chon7 = Validate.validateChon("nhập lựa chọn");
+                                if (chon7 == 2) {
+                                    tempList = new ArrayList<>();
+                                    Menu.main();
+                                }
+                                if (chon7 == 1) {
+                                    tempList = new ArrayList<>();
+                                    repairScore();
+                                }
+                                if (chon7 == 3) {
+                                    check = true;
+                                }
+
+                            }
                         }
                         if (student.statusPont1) {
                             int p1 = Validate.point("nhập điểm");
