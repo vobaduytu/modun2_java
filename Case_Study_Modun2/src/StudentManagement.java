@@ -125,6 +125,7 @@ public class StudentManagement {
                                 newName = Validate.validateName("nhập tên");
                             }
                             student.setName(newName);
+                            System.out.println("- đã sửa");
                             tempList.clear();
                             informationStudent();
                         }
@@ -139,6 +140,7 @@ public class StudentManagement {
                                 newSex = Validate.deleteWrite("nhập giới tính");
                             }
                             student.setSex(newSex);
+                            System.out.println("- đã sửa");
                             tempList.clear();
                             informationStudent();
                         }
@@ -146,7 +148,9 @@ public class StudentManagement {
                             try {
                                 String newAge = Validate.age("nhập ngày sinh");
                                 student.setAge(newAge);
+                                System.out.println("- đã sửa");
                                 tempList.clear();
+
                                 informationStudent();
                             } catch (Exception e) {
                                 System.out.println("bạn đã không sửa ngày sinh");
@@ -172,6 +176,10 @@ public class StudentManagement {
 
     //xóa học viên
     public static void removeStudent() throws IOException {
+        System.out.println("1.nhập tên học viên muốn xóa");
+        System.out.println("2.về menu");
+        int chonSua = Validate.validateChonMenu("nhập lựa chọn");
+        if (chonSua == 1){
 
         String nameRepair = Validate.validateName("nhập tên học viên muốn xóa");
         searchName(nameRepair);
@@ -203,6 +211,7 @@ public class StudentManagement {
                 System.out.println("đã xóa");
                 tempList.clear();
                 saveToFile();
+                removeStudent();
             }
             if (chon4 == 3) {
                 try {
@@ -236,10 +245,15 @@ public class StudentManagement {
                     System.out.println("đối tượng bị loại bỏ");
                     tempList.clear();
                     saveToFile();
+                    removeStudent();
                 } catch (Exception e) {
                     removeStudent();
                 }
             }
+        }
+        }
+        if (chonSua == 2){
+            Menu.main();
         }
     }
 
