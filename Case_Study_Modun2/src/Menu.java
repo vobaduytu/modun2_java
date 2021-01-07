@@ -22,28 +22,36 @@ public class Menu {
 
                 switch (chon) {
                     case 1:
-                      ShowStudent.showStudent(StudentManagement.studentList);
+                        ShowStudent.showStudent(StudentManagement.studentList);
                         break;
                     case 2:
-                        String newName = Validate.validateName("nhập tên học viên");
-                        while (newName.length() == 0) {
-                            System.out.println("yêu cầu nhập tên");
-                            newName = Validate.validateName("nhập tên học viên(bắt buộc)");
+                        System.out.println("1.nhập tên học viên để thêm");
+                        System.out.println("2.về menu");
+                        int chonSua = Validate.validateChonMenu("nhập lựa chọn");
+                        if (chonSua == 1) {
+                            String newName = Validate.validateName("nhập tên học viên");
+                            while (newName.length() == 0) {
+                                System.out.println("yêu cầu nhập tên");
+                                newName = Validate.validateName("nhập tên học viên(bắt buộc)");
+                            }
+
+                            String newSex = Validate.removeWrite("nhập giới tính");
+                            while (true) {
+                                if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
+                                    break;
+                                System.out.println("bạn nhập sai giới tính:");
+                                System.out.println("nhập lại:");
+                                newSex = Validate.removeWrite("nhập giới tính");
+                            }
+
+                            String newAge = Validate.age("nhập ngày sinh");
+
+                            StudentManagement.addStudent(newName, newSex, newAge);
+                            break;
                         }
-
-                        String newSex = Validate.removeWrite("nhập giới tính");
-                        while (true) {
-                            if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
-                                break;
-                            System.out.println("bạn nhập sai giới tính:");
-                            System.out.println("nhập lại:");
-                            newSex = Validate.removeWrite("nhập giới tính");
+                        if (chonSua == 2) {
+                            main();
                         }
-
-                        String newAge = Validate.age("nhập ngày sinh");
-
-                        StudentManagement.addStudent(newName, newSex, newAge);
-                        break;
                     case 3:
                         StudentManagement.informationStudent();
                         break;
