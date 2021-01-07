@@ -118,6 +118,7 @@ public class Validate {
     public static int validateID(String meesage) {
         System.out.println(meesage);
         try {
+
             return Integer.parseInt(scanner.nextLine());
         } catch (Exception e) {
             System.out.println(" phải là một số");
@@ -142,6 +143,35 @@ public class Validate {
         }
 
     }
+ // lựa chọn menu
+    public static int validateChonMenu(String meesage) {
+        System.out.println(meesage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 2 || num < 0) {
+                System.out.println("lựa chọn phải trong khoảng giới hạn đưa ra");
+                return validateChon(meesage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println(" phải là một số");
+            return validateChon(meesage);
+        }
 
 
+}
+// lựa chọ id
+    public static int validateChonID(String meesage) {
+        System.out.println(meesage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 3 || num < 0) {
+                System.out.println("lựa chọn phải trong khoảng giới hạn đưa ra");
+                return validateChon(meesage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println(" phải là một số");
+            return validateChon(meesage);
+        }}
 }
