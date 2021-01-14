@@ -6,7 +6,6 @@ public class Menu {
 
         Scanner input = new Scanner(System.in);
         try {
-            boolean cont = true;
             do {
                 System.out.println("-----------Menu-----------");
                 System.out.println("1: Xem danh sách học viên");
@@ -25,6 +24,10 @@ public class Menu {
                         ShowStudent.showStudent(StudentManagement.studentList);
                         break;
                     case 2:
+
+                        boolean check = true;
+                        while (check){
+                            check = false;
                         System.out.println("1.nhập tên học viên để thêm");
                         System.out.println("2.về menu");
                         int chonSua = Validate.validateChonMenu("nhập lựa chọn");
@@ -36,6 +39,7 @@ public class Menu {
                             }
 
                             String newSex = Validate.removeWrite("nhập giới tính");
+
                             while (true) {
                                 if (newSex.equals("Nam") || newSex.equals("Nu") || newSex.equals("nam") || newSex.equals("nu"))
                                     break;
@@ -47,11 +51,12 @@ public class Menu {
                             String newAge = Validate.age("nhập ngày sinh");
 
                             StudentManagement.addStudent(newName, newSex, newAge);
-                            break;
+                            System.out.println("---->thêm học viên thành công");
+                           check=true;
                         }
                         if (chonSua == 2) {
                             main();
-                        }
+                        }}
                     case 3:
                         StudentManagement.informationStudent();
                         break;
@@ -64,21 +69,19 @@ public class Menu {
                     case 6:
                         StudentManagement.repairScore();
                         break;
-
                     case 7:
                         System.out.println("theo thứ tự giảm dần");
                         StudentManagement.sort();
                         break;
                     case 8:
                         System.out.println("tạm biệt......");
-                        return;
+                        System.exit(0);
                     default:
                         System.err.println("nhập sai - chọn lại");
-
                         break;
                 }
             }
-            while (cont);
+            while (true);
         } catch (Exception e) {
             System.err.println("chọn lại:");
             main();

@@ -40,7 +40,7 @@ public class Validate {
     // xóa khoảng trống giới tính
     public static String removeWrite(String name) {
         System.out.println(name);
-
+        System.out.println("Nam/Nữ");
         String newName = scanner.nextLine();
         return newName.replaceAll("\\s+", "").trim();
 
@@ -72,13 +72,14 @@ public class Validate {
     // xóa khoảng trống giới tính
     public static String deleteWrite(String name) {
         System.out.println(name);
+        System.out.println("Nam/Nữ");
         String newName = scanner.nextLine();
         return newName.replaceAll("\\s+", "").trim();
 
     }
 //    chọn ô điểm
 
-    public static int choie(String me) {
+    public static double choie(String me) {
         System.out.println(me);
         System.out.println("1: nhập điểm hệ số 1.1");
         System.out.println("2: nhập điểm hệ số 1.2");
@@ -99,10 +100,32 @@ public class Validate {
     }
 
     //     điểm
-    public static int point(String meesage) {
+    public static double point(String meesage) {
         System.out.println(meesage);
         try {
-            int num = Integer.parseInt(scanner.nextLine());
+            double num = Double.parseDouble(scanner.nextLine());
+            if (num > 10 || num < 0) {
+                System.out.println("điểm phải trong khoảng 0 --> 10");
+                return point(meesage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println("phải là một số");
+            return point(meesage);
+        }
+    }
+
+    // nhập điểm hàng loạt
+    public static double points(String meesage) {
+        System.out.println("nhập -1 để ngắt");
+        System.out.println(meesage);
+
+        try {
+            double num = Double.parseDouble(scanner.nextLine());
+
+            if (num == -1) {
+                StudentManagement.inputScore();
+            }
             if (num > 10 || num < 0) {
                 System.out.println("điểm phải trong khoảng 0 --> 10");
                 return point(meesage);
@@ -143,7 +166,8 @@ public class Validate {
         }
 
     }
- // lựa chọn menu
+
+    // lựa chọn menu
     public static int validateChonMenu(String meesage) {
         System.out.println(meesage);
         try {
@@ -159,8 +183,27 @@ public class Validate {
         }
 
 
-}
-// lựa chọ id
+    }
+
+    // xóa
+    public static int validateChonRemove(String meesage) {
+        System.out.println(meesage);
+        try {
+            int num = Integer.parseInt(scanner.nextLine());
+            if (num > 3 || num < 0) {
+                System.out.println("lựa chọn phải trong khoảng giới hạn đưa ra");
+                return validateChon(meesage);
+            }
+            return num;
+        } catch (Exception e) {
+            System.out.println(" phải là một số");
+            return validateChon(meesage);
+        }
+
+
+    }
+
+    // lựa chọ id
     public static int validateChonID(String meesage) {
         System.out.println(meesage);
         try {
@@ -173,5 +216,6 @@ public class Validate {
         } catch (Exception e) {
             System.out.println(" phải là một số");
             return validateChon(meesage);
-        }}
+        }
+    }
 }
